@@ -1,11 +1,84 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
 from pathlib import Path
 import uuid
 
 from resume_parser import extract_text
 from ats_analyzer import calculate_ats_score
 
+
+# =========================================
+# RESPONSE MODELS
+# =========================================
+
+class AnalysisResponse(BaseModel):
+
+    ats_score: int = Field(
+        ge=0,
+        le=100,
+        description="Overall ATS-style resume score"
+    )
+
+    keyword_score: int = Field(
+        ge=0,
+        le=100,
+        description="Job description keyword match score"
+    )
+
+    length_score: int = Field(
+        ge=0,
+        le=100,
+        description="Resume length score"
+    )
+
+    section_score: int = Field(
+        ge=0,
+        le=100,
+        description="Important resume section score"
+    )
+
+    skill_diversity_score: int = Field(
+        ge=0,
+        le=100,
+        description="Technical skill diversity score"
+    )
+
+    achievement_score: int = Field(
+        ge=0,
+        le=100,
+        description="Achievement and measurable-result score"
+    )
+
+    matched_skills: list[str] = Field(
+        default_factory=list
+    )
+
+    missing_skills: list[str] = Field(
+        default_factory=list
+    )
+
+    priority_keywords: list[str] = Field(
+        default_factory=list
+    )
+
+    suggestions: list[str] = Field(
+        default_factory=list
+    )
+
+
+class ResumeAnalysisResponse(BaseModel):
+
+    status: str
+
+    filename: str
+
+    analysis: AnalysisResponse
+
+
+# =========================================
+# FASTAPI APPLICATION
+# =========================================
 
 app = FastAPI(
     title="CareerPilot AI API",
@@ -36,8 +109,14 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_methods=[
+        "GET",
+        "POST",
+        "OPTIONS"
+    ],
+    allow_headers=[
+        "Content-Type"
+    ],
 )
 
 
@@ -46,7 +125,10 @@ app.add_middleware(
 # =========================================
 
 UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
+
+UPLOAD_DIR.mkdir(
+    exist_ok=True
+)
 
 
 ALLOWED_EXTENSIONS = {
@@ -56,9 +138,11 @@ ALLOWED_EXTENSIONS = {
 
 
 ALLOWED_CONTENT_TYPES = {
+
     ".pdf": {
         "application/pdf"
     },
+
     ".docx": {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     }
@@ -101,11 +185,18 @@ def health():
 # RESUME ANALYZER
 # =========================================
 
-@app.post("/api/analyze-resume")
+@app.post(
+    "/api/analyze-resume",
+    response_model=ResumeAnalysisResponse
+)
 async def analyze_resume(
     file: UploadFile = File(...),
     job_description: str = Form("")
 ):
+
+    # -----------------------------------------
+    # FILE NAME VALIDATION
+    # -----------------------------------------
 
     if not file.filename:
 
@@ -115,10 +206,18 @@ async def analyze_resume(
         )
 
 
+    # -----------------------------------------
+    # SANITIZE ORIGINAL FILE NAME
+    # -----------------------------------------
+
     original_filename = Path(
         file.filename
     ).name
 
+
+    # -----------------------------------------
+    # EXTENSION VALIDATION
+    # -----------------------------------------
 
     extension = Path(
         original_filename
@@ -129,24 +228,43 @@ async def analyze_resume(
 
         raise HTTPException(
             status_code=400,
-            detail="Only PDF and DOCX resumes are currently supported."
+            detail=(
+                "Only PDF and DOCX resumes "
+                "are currently supported."
+            )
         )
 
 
-    if file.content_type not in ALLOWED_CONTENT_TYPES[extension]:
+    # -----------------------------------------
+    # MIME TYPE VALIDATION
+    # -----------------------------------------
+
+    if file.content_type not in ALLOWED_CONTENT_TYPES[
+        extension
+    ]:
 
         raise HTTPException(
             status_code=400,
-            detail="Invalid file type. Please upload a valid PDF or DOCX resume."
+            detail=(
+                "Invalid file type. "
+                "Please upload a valid PDF or DOCX resume."
+            )
         )
 
+
+    # -----------------------------------------
+    # GENERATE SAFE UNIQUE FILE NAME
+    # -----------------------------------------
 
     unique_filename = (
         f"{uuid.uuid4().hex}{extension}"
     )
 
 
-    file_path = UPLOAD_DIR / unique_filename
+    file_path = (
+        UPLOAD_DIR
+        / unique_filename
+    )
 
 
     total_size = 0
@@ -154,30 +272,54 @@ async def analyze_resume(
 
     try:
 
-        with open(file_path, "wb") as output:
+        # -----------------------------------------
+        # CHUNKED FILE WRITE
+        # -----------------------------------------
+
+        with open(
+            file_path,
+            "wb"
+        ) as output:
 
             while True:
 
-                chunk = await file.read(CHUNK_SIZE)
+                chunk = await file.read(
+                    CHUNK_SIZE
+                )
 
 
                 if not chunk:
                     break
 
 
-                total_size += len(chunk)
+                total_size += len(
+                    chunk
+                )
 
+
+                # -----------------------------------------
+                # HARD FILE SIZE LIMIT
+                # -----------------------------------------
 
                 if total_size > MAX_FILE_SIZE:
 
                     raise HTTPException(
                         status_code=400,
-                        detail="Resume must be smaller than 10 MB."
+                        detail=(
+                            "Resume must be "
+                            "smaller than 10 MB."
+                        )
                     )
 
 
-                output.write(chunk)
+                output.write(
+                    chunk
+                )
 
+
+        # -----------------------------------------
+        # EXTRACT RESUME TEXT
+        # -----------------------------------------
 
         resume_text = extract_text(
             str(file_path)
@@ -188,9 +330,16 @@ async def analyze_resume(
 
             raise HTTPException(
                 status_code=400,
-                detail="Could not extract readable text from the resume."
+                detail=(
+                    "Could not extract readable "
+                    "text from the resume."
+                )
             )
 
+
+        # -----------------------------------------
+        # ATS V2 ANALYSIS
+        # -----------------------------------------
 
         analysis = calculate_ats_score(
             resume_text,
@@ -198,9 +347,15 @@ async def analyze_resume(
         )
 
 
+        # -----------------------------------------
+        # API RESPONSE
+        # -----------------------------------------
+
         return {
             "status": "success",
+
             "filename": original_filename,
+
             "analysis": analysis
         }
 
@@ -214,11 +369,18 @@ async def analyze_resume(
 
         raise HTTPException(
             status_code=500,
-            detail="Resume analysis failed. Please try again."
+            detail=(
+                "Resume analysis failed. "
+                "Please try again."
+            )
         )
 
 
     finally:
+
+        # -----------------------------------------
+        # DELETE TEMPORARY RESUME
+        # -----------------------------------------
 
         if file_path.exists():
 
