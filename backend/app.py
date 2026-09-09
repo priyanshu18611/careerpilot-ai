@@ -81,10 +81,12 @@ class ResumeAnalysisResponse(BaseModel):
 # =========================================
 
 app = FastAPI(
-    title="CareerPilot AI API",
+    title="CareerPilot AI",
     description=(
         "AI-powered career intelligence platform for "
         "resume analysis, ATS optimization and career guidance."
+        "\n\n"
+        "Developed by Priyanshu Kumar."
     ),
     version="1.0.0",
     contact={
@@ -158,13 +160,22 @@ CHUNK_SIZE = 1024 * 1024
 # ROOT ENDPOINT
 # =========================================
 
-@app.get("/")
+@app.get(
+    "/",
+    tags=["CareerPilot AI"],
+    summary="CareerPilot AI API",
+    description=(
+        "CareerPilot AI backend API. "
+        "Built by Priyanshu Kumar."
+    )
+)
 def home():
 
     return {
         "status": "success",
         "message": "CareerPilot AI API is running 🚀",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "developer": "Priyanshu Kumar"
     }
 
 
@@ -172,12 +183,21 @@ def home():
 # HEALTH CHECK
 # =========================================
 
-@app.get("/api/health")
+@app.get(
+    "/api/health",
+    tags=["CareerPilot AI"],
+    summary="API Health Check",
+    description=(
+        "Check the health status of "
+        "CareerPilot AI backend service."
+    )
+)
 def health():
 
     return {
         "status": "healthy",
-        "service": "CareerPilot AI"
+        "service": "CareerPilot AI",
+        "developer": "Priyanshu Kumar"
     }
 
 
@@ -187,7 +207,14 @@ def health():
 
 @app.post(
     "/api/analyze-resume",
-    response_model=ResumeAnalysisResponse
+    response_model=ResumeAnalysisResponse,
+    tags=["Resume Intelligence"],
+    summary="Analyze Resume with ATS Intelligence",
+    description=(
+        "Analyze a PDF or DOCX resume against "
+        "a job description using CareerPilot AI "
+        "ATS intelligence."
+    )
 )
 async def analyze_resume(
     file: UploadFile = File(...),
@@ -253,7 +280,7 @@ async def analyze_resume(
 
 
     # -----------------------------------------
-    # GENERATE SAFE UNIQUE FILE NAME
+    # SAFE UNIQUE FILE NAME
     # -----------------------------------------
 
     unique_filename = (
@@ -353,9 +380,7 @@ async def analyze_resume(
 
         return {
             "status": "success",
-
             "filename": original_filename,
-
             "analysis": analysis
         }
 
