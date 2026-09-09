@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // =========================================
+    // API CONFIGURATION
+    // =========================================
+
     const API_BASE_URL =
         window.CAREERPILOT_CONFIG?.API_BASE_URL ||
         "http://127.0.0.1:8000";
 
+
+    // =========================================
+    // DOM ELEMENTS
+    // =========================================
 
     const resumeInput =
         document.getElementById("resumeInput");
@@ -39,16 +47,38 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("suggestionsList");
 
 
-    /* =========================================
-       RESUME UPLOAD
-    ========================================= */
+    // =========================================
+    // OPTIONAL ATS V2 ELEMENTS
+    // =========================================
+
+    const skillDiversityScore =
+        document.getElementById(
+            "skillDiversityScore"
+        );
+
+    const achievementScore =
+        document.getElementById(
+            "achievementScore"
+        );
+
+    const priorityKeywords =
+        document.getElementById(
+            "priorityKeywords"
+        );
+
+
+    // =========================================
+    // RESUME UPLOAD
+    // =========================================
 
     if (uploadButton && resumeInput) {
 
         uploadButton.addEventListener(
             "click",
             () => {
+
                 resumeInput.click();
+
             }
         );
 
@@ -66,17 +96,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     resumeInput.files[0];
 
 
+                // -----------------------------------------
+                // ALLOWED FILE TYPES
+                // -----------------------------------------
+
                 const allowedTypes = [
                     "application/pdf",
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 ];
 
 
+                // -----------------------------------------
+                // MAX FILE SIZE
+                // -----------------------------------------
+
                 const maxSize =
                     10 * 1024 * 1024;
 
 
-                if (!allowedTypes.includes(file.type)) {
+                // -----------------------------------------
+                // FILE TYPE CHECK
+                // -----------------------------------------
+
+                if (
+                    !allowedTypes.includes(
+                        file.type
+                    )
+                ) {
 
                     alert(
                         "Please upload a PDF or DOCX file."
@@ -88,7 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                if (file.size > maxSize) {
+                // -----------------------------------------
+                // FILE SIZE CHECK
+                // -----------------------------------------
+
+                if (
+                    file.size > maxSize
+                ) {
 
                     alert(
                         "File size must be less than 10 MB."
@@ -100,17 +152,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                await analyzeResume(file);
+                await analyzeResume(
+                    file
+                );
+
             }
         );
     }
 
 
-    /* =========================================
-       RESUME ANALYSIS
-    ========================================= */
+    // =========================================
+    // ANALYZE RESUME
+    // =========================================
 
     async function analyzeResume(file) {
+
+        if (!uploadButton) {
+            return;
+        }
+
 
         uploadButton.disabled = true;
 
@@ -118,10 +178,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "⏳ Analyzing Resume...";
 
 
-        analysisResult.hidden = true;
+        if (analysisResult) {
+
+            analysisResult.hidden = true;
+
+        }
 
 
         try {
+
+            // -----------------------------------------
+            // FORM DATA
+            // -----------------------------------------
 
             const formData =
                 new FormData();
@@ -135,9 +203,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             formData.append(
                 "job_description",
-                jobDescription.value.trim()
+                jobDescription
+                    ? jobDescription.value.trim()
+                    : ""
             );
 
+
+            // -----------------------------------------
+            // API REQUEST
+            // -----------------------------------------
 
             const response =
                 await fetch(
@@ -149,9 +223,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
+            // -----------------------------------------
+            // READ RESPONSE
+            // -----------------------------------------
+
             const data =
                 await response.json();
 
+
+            // -----------------------------------------
+            // API ERROR
+            // -----------------------------------------
 
             if (!response.ok) {
 
@@ -159,8 +241,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.detail ||
                     "Resume analysis failed."
                 );
+
             }
 
+
+            // -----------------------------------------
+            // DISPLAY ANALYSIS
+            // -----------------------------------------
 
             displayAnalysis(
                 data.analysis
@@ -174,6 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
             uploadButton.style.background =
                 "linear-gradient(135deg, #10b981, #06b6d4)";
 
+
         } catch (error) {
 
             console.error(
@@ -184,46 +272,98 @@ document.addEventListener("DOMContentLoaded", () => {
 
             alert(
                 "Unable to connect with CareerPilot AI backend.\n\n" +
-                "Please make sure the FastAPI server is running."
+                "Please try again in a moment."
             );
 
 
             uploadButton.textContent =
                 "Choose Resume";
 
+
         } finally {
 
             uploadButton.disabled = false;
+
         }
     }
 
 
-    /* =========================================
-       DISPLAY ANALYSIS
-    ========================================= */
+    // =========================================
+    // DISPLAY ANALYSIS
+    // =========================================
 
-    function displayAnalysis(analysis) {
+    function displayAnalysis(
+        analysis
+    ) {
 
         if (!analysis) {
             return;
         }
 
 
-        resultScore.textContent =
-            analysis.ats_score ?? "--";
+        // =========================================
+        // MAIN ATS SCORE
+        // =========================================
+
+        if (resultScore) {
+
+            resultScore.textContent =
+                analysis.ats_score ?? "--";
+
+        }
 
 
-        keywordScore.textContent =
-            `${analysis.keyword_score ?? 0}/100`;
+        // =========================================
+        // EXISTING SCORE CARDS
+        // =========================================
+
+        if (keywordScore) {
+
+            keywordScore.textContent =
+                `${analysis.keyword_score ?? 0}/100`;
+
+        }
 
 
-        lengthScore.textContent =
-            `${analysis.length_score ?? 0}/100`;
+        if (lengthScore) {
+
+            lengthScore.textContent =
+                `${analysis.length_score ?? 0}/100`;
+
+        }
 
 
-        sectionScore.textContent =
-            `${analysis.section_score ?? 0}/100`;
+        if (sectionScore) {
 
+            sectionScore.textContent =
+                `${analysis.section_score ?? 0}/100`;
+
+        }
+
+
+        // =========================================
+        // ATS V2 SCORE CARDS
+        // =========================================
+
+        if (skillDiversityScore) {
+
+            skillDiversityScore.textContent =
+                `${analysis.skill_diversity_score ?? 0}/100`;
+
+        }
+
+
+        if (achievementScore) {
+
+            achievementScore.textContent =
+                `${analysis.achievement_score ?? 0}/100`;
+
+        }
+
+
+        // =========================================
+        // MATCHED SKILLS
+        // =========================================
 
         renderSkills(
             matchedSkills,
@@ -232,6 +372,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+        // =========================================
+        // MISSING SKILLS
+        // =========================================
+
         renderSkills(
             missingSkills,
             analysis.missing_skills || [],
@@ -239,24 +383,48 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+        // =========================================
+        // PRIORITY KEYWORDS
+        // =========================================
+
+        renderSkills(
+            priorityKeywords,
+            analysis.priority_keywords || [],
+            "No priority keywords detected."
+        );
+
+
+        // =========================================
+        // SUGGESTIONS
+        // =========================================
+
         renderSuggestions(
             analysis.suggestions || []
         );
 
 
-        analysisResult.hidden = false;
+        // =========================================
+        // SHOW RESULT
+        // =========================================
+
+        if (analysisResult) {
+
+            analysisResult.hidden = false;
 
 
-        analysisResult.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+            analysisResult.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
     }
 
 
-    /* =========================================
-       RENDER SKILLS
-    ========================================= */
+    // =========================================
+    // RENDER SKILL BADGES
+    // =========================================
 
     function renderSkills(
         container,
@@ -264,13 +432,20 @@ document.addEventListener("DOMContentLoaded", () => {
         emptyMessage
     ) {
 
+        if (!container) {
+            return;
+        }
+
+
         container.innerHTML = "";
 
 
         if (!skills.length) {
 
             const empty =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             empty.textContent =
@@ -290,7 +465,9 @@ document.addEventListener("DOMContentLoaded", () => {
             (skill) => {
 
                 const badge =
-                    document.createElement("span");
+                    document.createElement(
+                        "span"
+                    );
 
 
                 badge.textContent =
@@ -304,26 +481,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.appendChild(
                     badge
                 );
+
             }
         );
+
     }
 
 
-    /* =========================================
-       RENDER SUGGESTIONS
-    ========================================= */
+    // =========================================
+    // RENDER SUGGESTIONS
+    // =========================================
 
     function renderSuggestions(
         suggestions
     ) {
 
-        suggestionsList.innerHTML = "";
+        if (!suggestionsList) {
+            return;
+        }
+
+
+        suggestionsList.innerHTML =
+            "";
 
 
         if (!suggestions.length) {
 
             const item =
-                document.createElement("li");
+                document.createElement(
+                    "li"
+                );
 
 
             item.textContent =
@@ -343,7 +530,9 @@ document.addEventListener("DOMContentLoaded", () => {
             (suggestion) => {
 
                 const item =
-                    document.createElement("li");
+                    document.createElement(
+                        "li"
+                    );
 
 
                 item.textContent =
@@ -353,14 +542,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 suggestionsList.appendChild(
                     item
                 );
+
             }
         );
+
     }
 
 
-    /* =========================================
-       HERO PRIMARY BUTTONS
-    ========================================= */
+    // =========================================
+    // HERO PRIMARY BUTTONS
+    // =========================================
 
     const primaryButtons =
         document.querySelectorAll(
@@ -386,16 +577,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         analyzer.scrollIntoView({
                             behavior: "smooth"
                         });
+
                     }
+
                 }
             );
+
         }
     );
 
 
-    /* =========================================
-       SECONDARY BUTTON
-    ========================================= */
+    // =========================================
+    // SECONDARY BUTTON
+    // =========================================
 
     const secondaryButton =
         document.querySelector(
@@ -420,15 +614,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     features.scrollIntoView({
                         behavior: "smooth"
                     });
+
                 }
+
             }
         );
+
     }
 
 
-    /* =========================================
-       NAV ANALYZER BUTTON
-    ========================================= */
+    // =========================================
+    // NAV ANALYZER BUTTON
+    // =========================================
 
     const navButton =
         document.querySelector(
@@ -453,9 +650,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     analyzer.scrollIntoView({
                         behavior: "smooth"
                     });
+
                 }
+
             }
         );
+
     }
 
 });
