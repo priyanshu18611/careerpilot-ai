@@ -6,12 +6,21 @@ import uuid
 from resume_parser import extract_text
 from ats_analyzer import calculate_ats_score
 
-
 app = FastAPI(
     title="CareerPilot AI API",
-    description="AI-powered resume analysis and career platform",
-    version="1.0.0"
+    description=(
+        "AI-powered career intelligence platform for "
+        "resume analysis, ATS optimization and career guidance."
+    ),
+    version="1.0.0",
+    contact={
+        "name": "Priyanshu Kumar",
+        "url": "https://github.com/priyanshu18611"
+    },
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
+
 
 
 # Frontend connection
