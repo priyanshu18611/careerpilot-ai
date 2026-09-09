@@ -1,12 +1,15 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import uuid
 
+from resume_parser import extract_text
+from ats_analyzer import calculate_ats_score
+
 
 app = FastAPI(
     title="CareerPilot AI API",
-    description="AI-powered career platform API",
+    description="AI-powered resume analysis and career platform",
     version="1.0.0"
 )
 
@@ -21,14 +24,13 @@ app.add_middleware(
 )
 
 
-# Temporary upload directory
+# Upload directory
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 
 ALLOWED_EXTENSIONS = {
     ".pdf",
-    ".doc",
     ".docx"
 }
 
@@ -37,6 +39,7 @@ MAX_FILE_SIZE = 10 * 1024 * 1024
 
 @app.get("/")
 def home():
+
     return {
         "status": "success",
         "message": "CareerPilot AI API is running 🚀",
@@ -46,31 +49,37 @@ def home():
 
 @app.get("/api/health")
 def health():
+
     return {
         "status": "healthy",
         "service": "CareerPilot AI"
     }
 
 
-@app.post("/api/resume/upload")
-async def upload_resume(
-    file: UploadFile = File(...)
+@app.post("/api/analyze-resume")
+async def analyze_resume(
+    file: UploadFile = File(...),
+    job_description: str = Form("")
 ):
 
     if not file.filename:
+
         raise HTTPException(
             status_code=400,
-            detail="No file selected."
+            detail="No resume selected."
         )
 
 
-    extension = Path(file.filename).suffix.lower()
+    extension = Path(
+        file.filename
+    ).suffix.lower()
 
 
     if extension not in ALLOWED_EXTENSIONS:
+
         raise HTTPException(
             status_code=400,
-            detail="Only PDF, DOC and DOCX files are allowed."
+            detail="Only PDF and DOCX resumes are currently supported."
         )
 
 
@@ -78,28 +87,71 @@ async def upload_resume(
 
 
     if len(file_data) > MAX_FILE_SIZE:
+
         raise HTTPException(
             status_code=400,
-            detail="File size must be less than 10 MB."
+            detail="Resume must be smaller than 10 MB."
         )
 
 
-    unique_name = (
+    unique_filename = (
         f"{uuid.uuid4().hex}{extension}"
     )
 
 
-    file_path = UPLOAD_DIR / unique_name
+    file_path = UPLOAD_DIR / unique_filename
 
 
-    with open(file_path, "wb") as output:
-        output.write(file_data)
+    try:
+
+        with open(file_path, "wb") as output:
+
+            output.write(file_data)
 
 
-    return {
-        "status": "success",
-        "message": "Resume uploaded successfully.",
-        "original_filename": file.filename,
-        "stored_filename": unique_name,
-        "size_bytes": len(file_data)
-    }
+        # Extract resume text
+        resume_text = extract_text(
+            str(file_path)
+        )
+
+
+        if not resume_text:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Could not extract readable text from the resume."
+            )
+
+
+        # Run ATS analysis
+        analysis = calculate_ats_score(
+            resume_text,
+            job_description
+        )
+
+
+        return {
+            "status": "success",
+            "filename": file.filename,
+            "analysis": analysis
+        }
+
+
+    except HTTPException:
+
+        raise
+
+
+    except Exception as error:
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Resume analysis failed: {str(error)}"
+        )
+
+
+    finally:
+
+        if file_path.exists():
+
+            file_path.unlink()
