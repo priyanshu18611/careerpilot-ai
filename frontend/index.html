@@ -330,8 +330,8 @@
             </h2>
 
             <p>
-                Upload your resume and optionally add a target
-                job description to get a personalized ATS analysis.
+                Upload your resume and add a target job
+                description to get a detailed ATS-style analysis.
             </p>
 
         </div>
@@ -391,10 +391,11 @@
                 >
 
 
-                <button class="primary-btn upload-btn">
-
+                <button
+                    type="button"
+                    class="primary-btn upload-btn"
+                >
                     Choose Resume
-
                 </button>
 
 
@@ -402,13 +403,16 @@
 
 
 
-            <!-- RESULT -->
+            <!-- ================= RESULT ================= -->
 
             <div
                 id="analysisResult"
                 class="analysis-result"
                 hidden
             >
+
+
+                <!-- RESULT HEADER -->
 
                 <div class="result-header">
 
@@ -440,6 +444,8 @@
                 </div>
 
 
+
+                <!-- SCORE BREAKDOWN -->
 
                 <div class="result-grid">
 
@@ -482,14 +488,43 @@
 
                     </div>
 
+
+                    <div class="result-item">
+
+                        <span>
+                            Skill Diversity
+                        </span>
+
+                        <strong id="skillDiversityScore">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-item">
+
+                        <span>
+                            Achievements
+                        </span>
+
+                        <strong id="achievementScore">
+                            --
+                        </strong>
+
+                    </div>
+
+
                 </div>
 
 
 
+                <!-- MATCHED SKILLS -->
+
                 <div class="skills-section">
 
                     <h4>
-                        Matched Skills
+                        ✓ Matched Skills
                     </h4>
 
                     <div
@@ -501,10 +536,12 @@
 
 
 
+                <!-- MISSING SKILLS -->
+
                 <div class="skills-section">
 
                     <h4>
-                        Missing Skills
+                        ⚠ Missing Skills
                     </h4>
 
                     <div
@@ -516,15 +553,56 @@
 
 
 
+                <!-- PRIORITY KEYWORDS -->
+
+                <div class="skills-section">
+
+                    <h4>
+                        🔑 Priority Keywords
+                    </h4>
+
+                    <p>
+                        Important keywords detected from the target role.
+                    </p>
+
+                    <div
+                        id="priorityKeywords"
+                        class="skills-list"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- SUGGESTIONS -->
+
                 <div class="suggestions-section">
 
                     <h4>
-                        AI Suggestions
+                        💡 AI Resume Suggestions
                     </h4>
 
-                    <ul id="suggestionsList"></ul>
+                    <ul
+                        id="suggestionsList"
+                    ></ul>
 
                 </div>
+
+
+
+                <!-- DISCLAIMER -->
+
+                <div
+                    style="
+                        margin-top: 20px;
+                        text-align: center;
+                        font-size: 11px;
+                        opacity: 0.55;
+                    "
+                >
+                    ATS-style estimate • Not an employer's actual ATS score
+                </div>
+
 
             </div>
 
@@ -611,427 +689,14 @@
 </footer>
 
 
+
+<!-- ================= JAVASCRIPT ================= -->
+
 <script src="config.js"></script>
+
 <script src="script.js"></script>
-<!-- =========================================================
-     CAREERPILOT AI — ATS RESUME ANALYZER
-========================================================== -->
 
-<section
-  id="analyzer"
-  class="max-w-6xl mx-auto px-4 sm:px-6 py-24"
->
 
-  <div class="text-center mb-12">
-
-    <span
-      class="text-orange-400 text-[10px] font-mono
-             uppercase tracking-[.3em]"
-    >
-      AI CAREER INTELLIGENCE
-    </span>
-
-    <h2
-      class="text-4xl sm:text-5xl font-black mt-3"
-    >
-      CareerPilot AI
-    </h2>
-
-    <p
-      class="text-slate-400 max-w-2xl mx-auto mt-4
-             text-sm sm:text-base leading-7"
-    >
-      Upload your resume and compare it with a target
-      job description using ATS-style resume intelligence.
-    </p>
-
-  </div>
-
-
-  <div
-    class="rounded-[2rem] border border-white/10
-           bg-white/[.025] backdrop-blur-xl
-           p-5 sm:p-8 shadow-2xl"
-  >
-
-    <!-- JOB DESCRIPTION -->
-
-    <div class="mb-6">
-
-      <label
-        for="jobDescription"
-        class="block text-xs font-bold
-               uppercase tracking-widest
-               text-slate-400 mb-3"
-      >
-        Target Job Description
-      </label>
-
-      <textarea
-        id="jobDescription"
-        rows="7"
-        placeholder="Paste the target job description here..."
-        class="w-full rounded-2xl
-               bg-black/30
-               border border-white/10
-               px-4 py-4
-               text-sm text-slate-200
-               placeholder:text-slate-600
-               outline-none
-               resize-y
-               focus:border-orange-500/50
-               transition"
-      ></textarea>
-
-    </div>
-
-
-    <!-- RESUME UPLOAD -->
-
-    <div
-      class="rounded-2xl
-             border border-dashed
-             border-orange-500/30
-             bg-orange-500/[.03]
-             p-6 text-center"
-    >
-
-      <input
-        id="resumeInput"
-        type="file"
-        accept=".pdf,.docx"
-        class="hidden"
-      />
-
-      <div
-        class="mx-auto mb-4
-               w-14 h-14 rounded-2xl
-               bg-orange-500/10
-               border border-orange-500/20
-               flex items-center justify-center"
-      >
-        <span class="text-2xl">📄</span>
-      </div>
-
-      <h3 class="font-bold text-lg">
-        Upload Your Resume
-      </h3>
-
-      <p class="text-xs text-slate-500 mt-2">
-        PDF or DOCX • Maximum 10 MB
-      </p>
-
-      <button
-        type="button"
-        class="upload-btn
-               mt-5
-               px-6 py-3
-               rounded-xl
-               bg-orange-500
-               text-black
-               font-bold
-               text-sm
-               hover:bg-orange-400
-               transition
-               disabled:opacity-50"
-      >
-        Choose Resume
-      </button>
-
-    </div>
-
-
-    <!-- ANALYSIS RESULT -->
-
-    <div
-      id="analysisResult"
-      hidden
-      class="mt-10"
-    >
-
-      <!-- MAIN SCORE -->
-
-      <div
-        class="rounded-3xl
-               border border-orange-500/20
-               bg-orange-500/[.04]
-               p-6 sm:p-8
-               text-center"
-      >
-
-        <div
-          class="text-[10px]
-                 uppercase
-                 tracking-[.3em]
-                 text-slate-500
-                 font-mono"
-        >
-          ATS-STYLE SCORE
-        </div>
-
-        <div
-          id="resultScore"
-          class="text-6xl sm:text-7xl
-                 font-black
-                 text-orange-400
-                 mt-3"
-        >
-          --
-        </div>
-
-        <div
-          class="text-xs
-                 text-slate-500
-                 mt-2"
-        >
-          out of 100
-        </div>
-
-      </div>
-
-
-      <!-- SCORE BREAKDOWN -->
-
-      <div
-        class="grid
-               grid-cols-2
-               md:grid-cols-3
-               gap-3
-               mt-5"
-      >
-
-        <div
-          class="rounded-2xl
-                 border border-white/10
-                 bg-white/[.025]
-                 p-4"
-        >
-          <div class="text-[9px] uppercase text-slate-600">
-            Keywords
-          </div>
-
-          <div
-            id="keywordScore"
-            class="text-xl font-black mt-2"
-          >
-            0/100
-          </div>
-        </div>
-
-
-        <div
-          class="rounded-2xl
-                 border border-white/10
-                 bg-white/[.025]
-                 p-4"
-        >
-          <div class="text-[9px] uppercase text-slate-600">
-            Length
-          </div>
-
-          <div
-            id="lengthScore"
-            class="text-xl font-black mt-2"
-          >
-            0/100
-          </div>
-        </div>
-
-
-        <div
-          class="rounded-2xl
-                 border border-white/10
-                 bg-white/[.025]
-                 p-4"
-        >
-          <div class="text-[9px] uppercase text-slate-600">
-            Sections
-          </div>
-
-          <div
-            id="sectionScore"
-            class="text-xl font-black mt-2"
-          >
-            0/100
-          </div>
-        </div>
-
-
-        <div
-          class="rounded-2xl
-                 border border-white/10
-                 bg-white/[.025]
-                 p-4"
-        >
-          <div class="text-[9px] uppercase text-slate-600">
-            Skill Diversity
-          </div>
-
-          <div
-            id="skillDiversityScore"
-            class="text-xl font-black mt-2"
-          >
-            0/100
-          </div>
-        </div>
-
-
-        <div
-          class="rounded-2xl
-                 border border-white/10
-                 bg-white/[.025]
-                 p-4
-                 col-span-2"
-        >
-          <div class="text-[9px] uppercase text-slate-600">
-            Achievements
-          </div>
-
-          <div
-            id="achievementScore"
-            class="text-xl font-black mt-2"
-          >
-            0/100
-          </div>
-        </div>
-
-      </div>
-
-
-      <!-- MATCHED SKILLS -->
-
-      <div
-        class="mt-5
-               rounded-2xl
-               border border-white/10
-               bg-white/[.025]
-               p-5"
-      >
-
-        <h3 class="font-bold">
-          ✓ Matched Skills
-        </h3>
-
-        <div
-          id="matchedSkills"
-          class="flex flex-wrap gap-2 mt-4
-                 text-xs text-slate-500"
-        ></div>
-
-      </div>
-
-
-      <!-- MISSING SKILLS -->
-
-      <div
-        class="mt-4
-               rounded-2xl
-               border border-white/10
-               bg-white/[.025]
-               p-5"
-      >
-
-        <h3 class="font-bold">
-          ⚠ Missing Skills
-        </h3>
-
-        <div
-          id="missingSkills"
-          class="flex flex-wrap gap-2 mt-4
-                 text-xs text-slate-500"
-        ></div>
-
-      </div>
-
-
-      <!-- PRIORITY KEYWORDS -->
-
-      <div
-        class="mt-4
-               rounded-2xl
-               border border-orange-500/20
-               bg-orange-500/[.03]
-               p-5"
-      >
-
-        <h3 class="font-bold">
-          🔑 Priority Keywords
-        </h3>
-
-        <p
-          class="text-xs
-                 text-slate-500
-                 mt-1"
-        >
-          Important keywords detected from the target role.
-        </p>
-
-        <div
-          id="priorityKeywords"
-          class="flex flex-wrap gap-2 mt-4
-                 text-xs text-slate-500"
-        ></div>
-
-      </div>
-
-
-      <!-- SUGGESTIONS -->
-
-      <div
-        class="mt-4
-               rounded-2xl
-               border border-white/10
-               bg-white/[.025]
-               p-5"
-      >
-
-        <h3 class="font-bold">
-          💡 AI Resume Suggestions
-        </h3>
-
-        <ul
-          id="suggestionsList"
-          class="mt-4
-                 space-y-3
-                 text-sm
-                 text-slate-400
-                 leading-6"
-        ></ul>
-
-      </div>
-
-
-      <!-- DISCLAIMER -->
-
-      <div
-        class="mt-5
-               text-center
-               text-[10px]
-               text-slate-600
-               font-mono"
-      >
-        ATS-style estimate • Not an employer's actual ATS score
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- DEVELOPER CREDIT -->
-
-  <div
-    class="text-center mt-8
-           text-[10px]
-           text-slate-600
-           font-mono
-           uppercase
-           tracking-[.25em]"
-  >
-    CareerPilot AI • Built by Priyanshu Kumar
-  </div>
-
-</section>
 </body>
 
 </html>
