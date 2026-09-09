@@ -37,7 +37,7 @@ SKILLS = {
     "algorithms",
     "oop",
     "operating systems",
-    "computer networks"
+    "computer networks",
 }
 
 
@@ -46,15 +46,30 @@ IMPORTANT_SECTIONS = {
     "experience",
     "skills",
     "projects",
-    "certifications"
+    "certifications",
+}
+
+
+ACTION_VERBS = {
+    "developed",
+    "designed",
+    "built",
+    "created",
+    "implemented",
+    "optimized",
+    "automated",
+    "analyzed",
+    "engineered",
+    "deployed",
+    "managed",
+    "integrated",
+    "improved",
+    "led",
+    "developed",
 }
 
 
 def normalize_text(text: str) -> str:
-    """
-    Normalize text for reliable ATS analysis.
-    """
-
     if not text:
         return ""
 
@@ -63,16 +78,13 @@ def normalize_text(text: str) -> str:
     text = re.sub(
         r"\s+",
         " ",
-        text
+        text,
     )
 
     return text.strip()
 
 
 def extract_skills(text: str) -> list[str]:
-    """
-    Extract known technical skills from text.
-    """
 
     normalized = normalize_text(text)
 
@@ -81,7 +93,7 @@ def extract_skills(text: str) -> list[str]:
     for skill in sorted(
         SKILLS,
         key=len,
-        reverse=True
+        reverse=True,
     ):
 
         pattern = (
@@ -92,25 +104,17 @@ def extract_skills(text: str) -> list[str]:
 
         if re.search(
             pattern,
-            normalized
+            normalized,
         ):
             found_skills.append(skill)
 
-    return sorted(
-        set(found_skills)
-    )
+    return sorted(set(found_skills))
 
 
 def calculate_ats_score(
     resume_text: str,
-    job_description: str = ""
+    job_description: str = "",
 ) -> dict:
-    """
-    Calculate an ATS-style resume score.
-
-    The score is a heuristic estimate and
-    does not represent an employer's actual ATS.
-    """
 
     resume = normalize_text(
         resume_text
@@ -125,11 +129,15 @@ def calculate_ats_score(
     )
 
     if job:
+
         job_skills = set(
             extract_skills(job)
         )
+
     else:
+
         job_skills = set(SKILLS)
+
 
     matched = (
         resume_skills
@@ -141,34 +149,43 @@ def calculate_ats_score(
         .difference(resume_skills)
     )
 
+
     keyword_score = calculate_keyword_score(
         matched,
-        job_skills
+        job_skills,
     )
 
     length_score = calculate_length_score(
-        resume
+        resume,
     )
 
     section_score = calculate_section_score(
-        resume
+        resume,
     )
 
     skill_diversity_score = calculate_skill_diversity_score(
-        resume_skills
+        resume_skills,
     )
 
-    ats_score = round(
-        keyword_score * 0.50
-        + length_score * 0.15
-        + section_score * 0.20
-        + skill_diversity_score * 0.15
+    achievement_score = calculate_achievement_score(
+        resume,
     )
+
+
+    ats_score = round(
+        keyword_score * 0.40
+        + length_score * 0.15
+        + section_score * 0.15
+        + skill_diversity_score * 0.15
+        + achievement_score * 0.15
+    )
+
 
     ats_score = min(
         max(ats_score, 0),
-        100
+        100,
     )
+
 
     suggestions = generate_suggestions(
         resume,
@@ -176,28 +193,43 @@ def calculate_ats_score(
         keyword_score,
         length_score,
         section_score,
-        skill_diversity_score
+        skill_diversity_score,
+        achievement_score,
     )
+
+
+    priority_keywords = get_priority_keywords(
+        missing
+    )
+
 
     return {
         "ats_score": ats_score,
+
         "keyword_score": keyword_score,
+
         "length_score": length_score,
+
         "section_score": section_score,
+
         "skill_diversity_score": skill_diversity_score,
+
+        "achievement_score": achievement_score,
+
         "matched_skills": sorted(matched),
+
         "missing_skills": sorted(missing),
-        "suggestions": suggestions
+
+        "priority_keywords": priority_keywords,
+
+        "suggestions": suggestions,
     }
 
 
 def calculate_keyword_score(
     matched: set,
-    job_skills: set
+    job_skills: set,
 ) -> int:
-    """
-    Calculate job-description keyword match score.
-    """
 
     if not job_skills:
         return 0
@@ -206,16 +238,14 @@ def calculate_keyword_score(
         (
             len(matched)
             / len(job_skills)
-        ) * 100
+        )
+        * 100
     )
 
 
 def calculate_length_score(
-    resume: str
+    resume: str,
 ) -> int:
-    """
-    Evaluate resume length.
-    """
 
     words = len(
         resume.split()
@@ -243,11 +273,8 @@ def calculate_length_score(
 
 
 def calculate_section_score(
-    resume: str
+    resume: str,
 ) -> int:
-    """
-    Check whether important resume sections exist.
-    """
 
     found = 0
 
@@ -260,16 +287,14 @@ def calculate_section_score(
         (
             found
             / len(IMPORTANT_SECTIONS)
-        ) * 100
+        )
+        * 100
     )
 
 
 def calculate_skill_diversity_score(
-    resume_skills: set
+    resume_skills: set,
 ) -> int:
-    """
-    Estimate technical skill coverage.
-    """
 
     skill_count = len(
         resume_skills
@@ -296,16 +321,70 @@ def calculate_skill_diversity_score(
     return 20
 
 
+def calculate_achievement_score(
+    resume: str,
+) -> int:
+
+    if not resume:
+        return 0
+
+    verb_count = 0
+
+    for verb in ACTION_VERBS:
+
+        pattern = (
+            r"(?<!\w)"
+            + re.escape(verb)
+            + r"(?!\w)"
+        )
+
+        if re.search(
+            pattern,
+            resume,
+        ):
+            verb_count += 1
+
+    number_count = len(
+        re.findall(
+            r"\b\d+(?:\.\d+)?%?\b",
+            resume,
+        )
+    )
+
+    score = (
+        min(verb_count * 10, 60)
+        + min(number_count * 10, 40)
+    )
+
+    return min(
+        score,
+        100,
+    )
+
+
+def get_priority_keywords(
+    missing_skills: set,
+) -> list[str]:
+
+    priority = sorted(
+        missing_skills
+    )
+
+    return priority[:10]
+
+
 def generate_suggestions(
     resume: str,
     missing_skills: set,
     keyword_score: int,
     length_score: int,
     section_score: int,
-    skill_diversity_score: int
+    skill_diversity_score: int,
+    achievement_score: int,
 ) -> list[str]:
 
     suggestions = []
+
 
     if keyword_score < 70:
 
@@ -313,29 +392,41 @@ def generate_suggestions(
             "Add relevant keywords from the target job description."
         )
 
+
     if section_score < 80:
 
         suggestions.append(
             "Add clear sections such as Skills, Projects, Education, Experience and Certifications."
         )
 
+
     if length_score < 75:
 
         suggestions.append(
-            "Your resume appears too short. Add measurable project, internship or achievement details."
+            "Add measurable project, internship or achievement details."
         )
+
 
     if length_score < 70:
 
         suggestions.append(
-            "Avoid making the resume unnecessarily long. Keep only relevant information."
+            "Keep the resume focused and remove unnecessary information."
         )
+
 
     if skill_diversity_score < 70:
 
         suggestions.append(
             "Add more relevant technical skills that match your target role."
         )
+
+
+    if achievement_score < 60:
+
+        suggestions.append(
+            "Use stronger action verbs and measurable results in project or experience bullets."
+        )
+
 
     if missing_skills:
 
@@ -348,10 +439,12 @@ def generate_suggestions(
             + ", ".join(top_missing)
         )
 
+
     if not suggestions:
 
         suggestions.append(
             "Your resume has a strong ATS-friendly structure. Continue improving measurable achievements."
         )
+
 
     return suggestions
