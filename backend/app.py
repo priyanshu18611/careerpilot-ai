@@ -6,6 +6,7 @@ import uuid
 from resume_parser import extract_text
 from ats_analyzer import calculate_ats_score
 
+
 app = FastAPI(
     title="CareerPilot AI API",
     description=(
@@ -22,18 +23,28 @@ app = FastAPI(
 )
 
 
+# =========================================
+# CORS CONFIGURATION
+# =========================================
 
-# Frontend connection
+ALLOWED_ORIGINS = [
+    "https://priyanshu18611.github.io"
+]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 
-# Upload directory
+# =========================================
+# UPLOAD CONFIGURATION
+# =========================================
+
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
@@ -43,8 +54,13 @@ ALLOWED_EXTENSIONS = {
     ".docx"
 }
 
+
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
+
+# =========================================
+# ROOT ENDPOINT
+# =========================================
 
 @app.get("/")
 def home():
@@ -56,6 +72,10 @@ def home():
     }
 
 
+# =========================================
+# HEALTH CHECK
+# =========================================
+
 @app.get("/api/health")
 def health():
 
@@ -64,6 +84,10 @@ def health():
         "service": "CareerPilot AI"
     }
 
+
+# =========================================
+# RESUME ANALYZER
+# =========================================
 
 @app.post("/api/analyze-resume")
 async def analyze_resume(
@@ -118,7 +142,6 @@ async def analyze_resume(
             output.write(file_data)
 
 
-        # Extract resume text
         resume_text = extract_text(
             str(file_path)
         )
@@ -132,7 +155,6 @@ async def analyze_resume(
             )
 
 
-        # Run ATS analysis
         analysis = calculate_ats_score(
             resume_text,
             job_description
