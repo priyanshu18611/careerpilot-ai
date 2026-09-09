@@ -1,3 +1,4 @@
+![CareerPilot AI CI](https://github.com/priyanshu18611/careerpilot-ai/actions/workflows/python-ci.yml/badge.svg)
 # 🚀 CareerPilot AI
 
 > AI-powered career platform for resume analysis, ATS optimization, job matching and interview preparation.
