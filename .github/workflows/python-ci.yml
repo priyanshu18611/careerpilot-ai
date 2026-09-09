@@ -30,22 +30,34 @@ jobs:
           python-version: "3.12"
 
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         working-directory: backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
 
-      - name: Check Python files
+      - name: Install test dependencies
+        run: |
+          pip install pytest
+
+
+      - name: Check Python syntax
         working-directory: backend
         run: |
           python -m py_compile app.py
           python -m py_compile resume_parser.py
           python -m py_compile ats_analyzer.py
+          python -m py_compile test_ats_analyzer.py
 
 
       - name: Verify application import
         working-directory: backend
         run: |
           python -c "from app import app; print('CareerPilot AI API import successful')"
+
+
+      - name: Run ATS tests
+        working-directory: backend
+        run: |
+          pytest -v test_ats_analyzer.py
