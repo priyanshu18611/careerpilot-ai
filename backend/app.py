@@ -55,7 +55,19 @@ ALLOWED_EXTENSIONS = {
 }
 
 
+ALLOWED_CONTENT_TYPES = {
+    ".pdf": {
+        "application/pdf"
+    },
+    ".docx": {
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    }
+}
+
+
 MAX_FILE_SIZE = 10 * 1024 * 1024
+
+CHUNK_SIZE = 1024 * 1024
 
 
 # =========================================
@@ -103,8 +115,13 @@ async def analyze_resume(
         )
 
 
-    extension = Path(
+    original_filename = Path(
         file.filename
+    ).name
+
+
+    extension = Path(
+        original_filename
     ).suffix.lower()
 
 
@@ -116,14 +133,11 @@ async def analyze_resume(
         )
 
 
-    file_data = await file.read()
-
-
-    if len(file_data) > MAX_FILE_SIZE:
+    if file.content_type not in ALLOWED_CONTENT_TYPES[extension]:
 
         raise HTTPException(
             status_code=400,
-            detail="Resume must be smaller than 10 MB."
+            detail="Invalid file type. Please upload a valid PDF or DOCX resume."
         )
 
 
@@ -135,11 +149,34 @@ async def analyze_resume(
     file_path = UPLOAD_DIR / unique_filename
 
 
+    total_size = 0
+
+
     try:
 
         with open(file_path, "wb") as output:
 
-            output.write(file_data)
+            while True:
+
+                chunk = await file.read(CHUNK_SIZE)
+
+
+                if not chunk:
+                    break
+
+
+                total_size += len(chunk)
+
+
+                if total_size > MAX_FILE_SIZE:
+
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Resume must be smaller than 10 MB."
+                    )
+
+
+                output.write(chunk)
 
 
         resume_text = extract_text(
@@ -163,7 +200,7 @@ async def analyze_resume(
 
         return {
             "status": "success",
-            "filename": file.filename,
+            "filename": original_filename,
             "analysis": analysis
         }
 
@@ -173,11 +210,11 @@ async def analyze_resume(
         raise
 
 
-    except Exception as error:
+    except Exception:
 
         raise HTTPException(
             status_code=500,
-            detail=f"Resume analysis failed: {str(error)}"
+            detail="Resume analysis failed. Please try again."
         )
 
 
@@ -186,3 +223,6 @@ async def analyze_resume(
         if file_path.exists():
 
             file_path.unlink()
+
+
+        await file.close()
