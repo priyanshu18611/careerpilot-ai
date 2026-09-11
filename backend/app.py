@@ -7,6 +7,7 @@ import uuid
 from resume_parser import extract_text
 from ats_analyzer import calculate_ats_score
 from job_matcher import calculate_match_score
+from roadmap_engine import create_career_roadmap
 
 # =========================================
 # RESPONSE MODELS
