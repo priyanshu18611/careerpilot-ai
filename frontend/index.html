@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
 
@@ -12,20 +12,15 @@
 
     <meta
         name="description"
-        content="CareerPilot AI — AI-powered resume intelligence and ATS optimization platform by Priyanshu Kumar."
-    >
-
-    <meta
-        name="author"
-        content="Priyanshu Kumar"
+        content="CareerPilot AI — AI-powered career intelligence platform by Priyanshu Kumar."
     >
 
     <meta
         name="theme-color"
-        content="#070b18"
+        content="#07070a"
     >
 
-    <title>CareerPilot AI — Priyanshu Kumar</title>
+    <title>CareerPilot AI | AI Career Intelligence</title>
 
     <link
         rel="stylesheet"
@@ -37,227 +32,245 @@
 
 <body>
 
-    <!-- =========================================
-         BACKGROUND
-    ========================================== -->
 
-    <div class="background-orb orb-one"></div>
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-    <div class="background-orb orb-two"></div>
+<header class="navbar">
 
-    <div class="background-grid"></div>
+    <div class="container nav-container">
 
 
-    <!-- =========================================
-         NAVBAR
-    ========================================== -->
+        <!-- BRAND -->
 
-    <header class="navbar">
+        <a
+            href="#"
+            class="logo"
+            aria-label="CareerPilot AI Home"
+        >
 
-        <div class="nav-container">
+            <span class="logo-mark">
+                <span class="logo-cp">CP</span>
+                <span class="logo-orbit"></span>
+            </span>
 
-            <a
-                href="#home"
-                class="brand"
-            >
+            <span class="logo-text">
+                CareerPilot<span>AI</span>
+            </span>
 
-                <span class="brand-icon">
-                    CP
-                </span>
+        </a>
 
-                <span class="brand-text">
-                    CareerPilot
-                    <strong>AI</strong>
-                </span>
 
+        <!-- DESKTOP NAV -->
+
+        <nav
+            class="nav-links"
+            id="navLinks"
+        >
+
+            <a href="#features">
+                Features
             </a>
 
+            <a href="#analyzer">
+                Analyzer
+            </a>
 
-            <nav class="nav-links">
+            <a href="#experience">
+                Experience
+            </a>
 
-                <a href="#home">
-                    Home
-                </a>
+            <a href="#projects">
+                Projects
+            </a>
 
-                <a href="#features">
-                    Features
-                </a>
-
-                <a href="#analyzer">
-                    ATS Analyzer
-                </a>
-
-                <a href="#certifications">
-                    Certifications
-                </a>
-
-                <a href="#about">
-                    About
-                </a>
-
-            </nav>
-
+            <a href="#certifications">
+                Certifications
+            </a>
 
             <button
                 class="nav-btn"
                 type="button"
             >
-                Analyze Resume
+                Get Started
             </button>
 
-        </div>
-
-    </header>
+        </nav>
 
 
-    <!-- =========================================
-         MAIN
-    ========================================== -->
+        <!-- MOBILE MENU -->
 
-    <main>
-
-
-        <!-- =====================================
-             HERO
-        ====================================== -->
-
-        <section
-            id="home"
-            class="hero section"
+        <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
         >
 
-            <div class="hero-content">
+            <span></span>
+            <span></span>
+            <span></span>
 
-                <div class="developer-badge">
+        </button>
 
-                    <span class="status-dot"></span>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main>
+
+
+<section class="hero">
+
+    <div class="container hero-container">
+
+
+        <!-- HERO CONTENT -->
+
+        <div class="hero-content">
+
+
+            <div class="badge">
+                <span class="badge-dot"></span>
+                AI-Powered Career Intelligence
+            </div>
+
+
+            <p class="hero-eyebrow">
+                BUILT BY PRIYANSHU KUMAR
+            </p>
+
+
+            <h1>
+
+                Build Your
+
+                <span>
+                    Career
+                </span>
+
+                With Intelligence.
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Analyze your resume, optimize your ATS score,
+                identify skill gaps and turn your career goals
+                into a clear action plan with CareerPilot AI.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary-btn"
+                    type="button"
+                >
+
+                    Analyze Resume
 
                     <span>
-                        Built by
-                        <strong>Priyanshu Kumar</strong>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="secondary-btn"
+                    type="button"
+                >
+
+                    Explore Platform
+
+                </button>
+
+            </div>
+
+
+            <!-- HERO STATS -->
+
+            <div class="hero-stats">
+
+                <div class="hero-stat">
+
+                    <strong>
+                        AI
+                    </strong>
+
+                    <span>
+                        Career Intelligence
                     </span>
 
                 </div>
 
 
-                <div class="hero-mini-label">
-                    AI • CAREER INTELLIGENCE • ATS
-                </div>
+                <div class="hero-stat">
 
+                    <strong>
+                        ATS
+                    </strong>
 
-                <h1>
-
-                    Build Your
-                    <span class="gradient-text">
-                        Career
+                    <span>
+                        Resume Analysis
                     </span>
 
-                    <br>
-
-                    With Intelligence.
-
-                </h1>
-
-
-                <p class="hero-description">
-
-                    CareerPilot AI helps students and job seekers
-                    analyze resumes, understand ATS compatibility,
-                    identify missing skills and improve their
-                    career profile with intelligent insights.
-
-                </p>
-
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="primary-btn"
-                        type="button"
-                    >
-
-                        <span>
-                            Analyze My Resume
-                        </span>
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="secondary-btn"
-                        type="button"
-                    >
-
-                        Explore Features
-
-                    </button>
-
                 </div>
 
 
-                <div class="hero-stats">
+                <div class="hero-stat">
 
-                    <div class="stat-card">
+                    <strong>
+                        15+
+                    </strong>
 
-                        <strong>
-                            AI
-                        </strong>
-
-                        <span>
-                            Career Intelligence
-                        </span>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <strong>
-                            ATS
-                        </strong>
-
-                        <span>
-                            Resume Analysis
-                        </span>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <strong>
-                            24/7
-                        </strong>
-
-                        <span>
-                            Career Support
-                        </span>
-
-                    </div>
+                    <span>
+                        Certifications
+                    </span>
 
                 </div>
 
             </div>
 
 
-            <!-- 3D VISUAL -->
-
-            <div class="hero-visual">
-
-                <div class="ai-orbit orbit-large"></div>
-
-                <div class="ai-orbit orbit-medium"></div>
-
-                <div class="ai-orbit orbit-small"></div>
+        </div>
 
 
-                <div class="ai-core">
 
-                    <div class="core-glow"></div>
+        <!-- =================================================
+             3D HERO VISUAL
+        ================================================== -->
+
+        <div class="hero-visual">
+
+
+            <div class="hero-glow"></div>
+
+
+            <div class="orbit orbit-one"></div>
+
+            <div class="orbit orbit-two"></div>
+
+            <div class="orbit orbit-three"></div>
+
+
+            <!-- CORE -->
+
+            <div class="career-core">
+
+                <div class="core-inner">
 
                     <span>
                         CP
@@ -269,339 +282,440 @@
 
                 </div>
 
+            </div>
 
-                <div class="floating-card card-one">
+
+            <!-- FLOATING CARDS -->
+
+            <div class="floating-card floating-card-top">
+
+                <span class="floating-icon">
+                    ✦
+                </span>
+
+                <div>
+
+                    <strong>
+                        AI Analysis
+                    </strong>
+
+                    <small>
+                        Resume Intelligence
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card floating-card-right">
+
+                <span class="floating-icon">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        ATS Optimized
+                    </strong>
+
+                    <small>
+                        Career Ready
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card floating-card-bottom">
+
+                <span class="floating-icon">
+                    ↗
+                </span>
+
+                <div>
+
+                    <strong>
+                        Career Growth
+                    </strong>
+
+                    <small>
+                        Skills + Roadmap
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORE -->
+
+            <div class="hero-score-card">
+
+                <div class="score-header">
 
                     <span>
-                        ✓
+                        ATS SCORE
                     </span>
 
-                    <div>
-
-                        <strong>
-                            ATS Ready
-                        </strong>
-
-                        <small>
-                            Resume optimized
-                        </small>
-
-                    </div>
+                    <span class="live-status">
+                        ● LIVE
+                    </span>
 
                 </div>
 
 
-                <div class="floating-card card-two">
+                <div class="score-main">
+
+                    <strong>
+                        87
+                    </strong>
+
+                    <span>
+                        /100
+                    </span>
+
+                </div>
+
+
+                <div class="score-progress">
+
+                    <span></span>
+
+                </div>
+
+
+                <small>
+                    Strong resume performance
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section
+    class="features"
+    id="features"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                POWERFUL PLATFORM
+            </span>
+
+            <h2>
+                Everything You Need
+                To Move Forward
+            </h2>
+
+            <p>
+                One intelligent platform for resume optimization,
+                career planning and professional growth.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    📄
+                </div>
+
+                <span class="feature-number">
+                    01
+                </span>
+
+                <h3>
+                    AI Resume Analyzer
+                </h3>
+
+                <p>
+                    Analyze your resume structure, skills,
+                    achievements and overall ATS readiness.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    🎯
+                </div>
+
+                <span class="feature-number">
+                    02
+                </span>
+
+                <h3>
+                    ATS Optimization
+                </h3>
+
+                <p>
+                    Compare your resume with target job
+                    descriptions and discover important keywords.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+                <span class="feature-number">
+                    03
+                </span>
+
+                <h3>
+                    Skill Gap Detection
+                </h3>
+
+                <p>
+                    Find missing technical skills and prioritize
+                    what you should learn next.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <span class="feature-number">
+                    04
+                </span>
+
+                <h3>
+                    Career Intelligence
+                </h3>
+
+                <p>
+                    Turn your experience, projects and skills
+                    into actionable career insights.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    🎤
+                </div>
+
+                <span class="feature-number">
+                    05
+                </span>
+
+                <h3>
+                    Interview Preparation
+                </h3>
+
+                <p>
+                    Prepare for technical and HR interviews
+                    with structured career-focused guidance.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    🚀
+                </div>
+
+                <span class="feature-number">
+                    06
+                </span>
+
+                <h3>
+                    Career Roadmap
+                </h3>
+
+                <p>
+                    Build a practical roadmap from your current
+                    skills to your target career.
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ANALYZER
+===================================================== -->
+
+<section
+    class="analyzer"
+    id="analyzer"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                RESUME INTELLIGENCE
+            </span>
+
+            <h2>
+                Analyze Your Resume
+            </h2>
+
+            <p>
+                Upload your PDF or DOCX resume and optionally
+                provide a target job description.
+            </p>
+
+        </div>
+
+
+        <div class="analyzer-card">
+
+
+            <!-- TARGET JOB -->
+
+            <div class="job-description-box">
+
+                <div class="input-label-row">
+
+                    <label for="jobDescription">
+                        Target Job Description
+                    </label>
+
+                    <span>
+                        OPTIONAL
+                    </span>
+
+                </div>
+
+
+                <textarea
+                    id="jobDescription"
+                    rows="8"
+                    placeholder="Paste the target job description here...
+
+Example:
+Python Developer
+SQL
+REST API
+FastAPI
+Git
+Machine Learning
+Data Analytics"
+                ></textarea>
+
+
+                <div class="input-hint">
 
                     <span>
                         ✦
                     </span>
 
-                    <div>
-
-                        <strong>
-                            AI Insights
-                        </strong>
-
-                        <small>
-                            Smart recommendations
-                        </small>
-
-                    </div>
+                    Better job descriptions produce
+                    more relevant keyword insights.
 
                 </div>
 
+            </div>
 
-                <div class="floating-card card-three">
+
+
+            <!-- UPLOAD -->
+
+            <div class="upload-box">
+
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+
+                <h3>
+                    Upload Your Resume
+                </h3>
+
+
+                <p>
+                    PDF or DOCX
+                    <span>•</span>
+                    Maximum 10 MB
+                </p>
+
+
+                <input
+                    id="resumeInput"
+                    type="file"
+                    accept=".pdf,.docx"
+                    hidden
+                >
+
+
+                <button
+                    class="primary-btn upload-btn"
+                    type="button"
+                >
+
+                    Choose Resume
 
                     <span>
-                        %
+                        →
                     </span>
 
-                    <div>
-
-                        <strong>
-                            Score
-                        </strong>
-
-                        <small>
-                            Real-time analysis
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
+                </button>
 
 
-        <!-- =====================================
-             FEATURES
-        ====================================== -->
+                <small>
+                    Your resume is analyzed securely
+                    and the temporary upload is removed
+                    after processing.
+                </small>
 
-        <section
-            id="features"
-            class="section"
-        >
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    WHY CAREERPILOT AI
-                </span>
-
-                <h2>
-                    Everything You Need
-                    <span class="gradient-text">
-                        To Move Forward
-                    </span>
-                </h2>
-
-                <p>
-                    A modern career intelligence platform
-                    designed for students, freshers and
-                    ambitious professionals.
-                </p>
 
             </div>
 
 
-            <div class="features-grid">
 
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🎯
-                    </div>
-
-                    <h3>
-                        ATS Resume Analysis
-                    </h3>
-
-                    <p>
-                        Analyze your resume against
-                        job descriptions and understand
-                        your ATS compatibility.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🧠
-                    </div>
-
-                    <h3>
-                        AI Career Intelligence
-                    </h3>
-
-                    <p>
-                        Get intelligent insights about
-                        skills, keywords, achievements
-                        and career improvement areas.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        ⚡
-                    </div>
-
-                    <h3>
-                        Skill Gap Detection
-                    </h3>
-
-                    <p>
-                        Discover important skills that
-                        are missing from your resume
-                        for your target role.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        📊
-                    </div>
-
-                    <h3>
-                        Resume Intelligence
-                    </h3>
-
-                    <p>
-                        Get detailed scoring for keywords,
-                        sections, resume length, skills
-                        and achievements.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🚀
-                    </div>
-
-                    <h3>
-                        Career Growth
-                    </h3>
-
-                    <p>
-                        Turn resume insights into practical
-                        actions for improving your job
-                        search strategy.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🔐
-                    </div>
-
-                    <h3>
-                        Privacy Focused
-                    </h3>
-
-                    <p>
-                        Resume files are processed for
-                        analysis and temporary uploaded
-                        files are removed after processing.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             ATS ANALYZER
-        ====================================== -->
-
-        <section
-            id="analyzer"
-            class="section analyzer-section"
-        >
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    CAREERPILOT AI ENGINE
-                </span>
-
-                <h2>
-                    Analyze Your
-                    <span class="gradient-text">
-                        Resume
-                    </span>
-                </h2>
-
-                <p>
-                    Upload your resume and optionally
-                    provide a target job description.
-                </p>
-
-            </div>
-
-
-            <div class="analyzer-container">
-
-
-                <div class="upload-panel">
-
-                    <div class="upload-icon">
-                        ↑
-                    </div>
-
-
-                    <h3>
-                        Upload Resume
-                    </h3>
-
-
-                    <p>
-                        Supported formats:
-                        PDF and DOCX
-                    </p>
-
-
-                    <p class="upload-limit">
-                        Maximum file size: 10 MB
-                    </p>
-
-
-                    <input
-                        id="resumeInput"
-                        type="file"
-                        accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        hidden
-                    >
-
-
-                    <button
-                        class="upload-btn"
-                        type="button"
-                    >
-
-                        Choose Resume
-
-                    </button>
-
-                </div>
-
-
-                <div class="job-panel">
-
-                    <label
-                        for="jobDescription"
-                    >
-
-                        Target Job Description
-
-                    </label>
-
-
-                    <textarea
-                        id="jobDescription"
-                        rows="10"
-                        placeholder="Paste the target job description here...&#10;&#10;Example: Python Developer, Java Developer, Software Engineer, Data Analyst..."
-                    ></textarea>
-
-
-                    <div class="job-hint">
-
-                        <span>
-                            💡
-                        </span>
-
-                        Adding a job description
-                        improves keyword matching.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================
+            <!-- =================================================
                  ANALYSIS RESULT
-            ================================== -->
+            ================================================== -->
 
             <div
                 id="analysisResult"
@@ -609,22 +723,24 @@
                 hidden
             >
 
+
                 <div class="result-header">
+
 
                     <div>
 
-                        <span class="section-label">
-                            ANALYSIS COMPLETE
+                        <span>
+                            CAREERPILOT AI ANALYSIS
                         </span>
 
                         <h3>
-                            Your Resume Score
+                            Resume Intelligence Report
                         </h3>
 
                     </div>
 
 
-                    <div class="score-circle">
+                    <div class="result-score">
 
                         <strong id="resultScore">
                             --
@@ -636,445 +752,1279 @@
 
                     </div>
 
+
                 </div>
 
 
-                <div class="score-grid">
+
+                <!-- SCORE GRID -->
+
+                <div class="result-grid">
 
 
-                    <div class="score-card">
+                    <div class="result-item">
 
                         <span>
                             Keyword Match
                         </span>
 
                         <strong id="keywordScore">
-                            0/100
+                            --
                         </strong>
 
                     </div>
 
 
-                    <div class="score-card">
+                    <div class="result-item">
 
                         <span>
                             Resume Length
                         </span>
 
                         <strong id="lengthScore">
-                            0/100
+                            --
                         </strong>
 
                     </div>
 
 
-                    <div class="score-card">
+                    <div class="result-item">
 
                         <span>
-                            Sections
+                            Section Quality
                         </span>
 
                         <strong id="sectionScore">
-                            0/100
+                            --
                         </strong>
 
                     </div>
 
 
-                    <div class="score-card">
+                    <div class="result-item">
 
                         <span>
                             Skill Diversity
                         </span>
 
                         <strong id="skillDiversityScore">
-                            0/100
+                            --
                         </strong>
 
                     </div>
 
 
-                    <div class="score-card">
+                    <div class="result-item">
 
                         <span>
-                            Achievements
+                            Achievement Quality
                         </span>
 
                         <strong id="achievementScore">
-                            0/100
+                            --
                         </strong>
 
                     </div>
 
-                </div>
-
-
-                <div class="analysis-columns">
-
-
-                    <div class="analysis-box">
-
-                        <h4>
-                            ✓ Matched Skills
-                        </h4>
-
-                        <div
-                            id="matchedSkills"
-                            class="skills-container"
-                        ></div>
-
-                    </div>
-
-
-                    <div class="analysis-box">
-
-                        <h4>
-                            ⚠ Missing Skills
-                        </h4>
-
-                        <div
-                            id="missingSkills"
-                            class="skills-container"
-                        ></div>
-
-                    </div>
-
-
-                    <div class="analysis-box">
-
-                        <h4>
-                            🔑 Priority Keywords
-                        </h4>
-
-                        <div
-                            id="priorityKeywords"
-                            class="skills-container"
-                        ></div>
-
-                    </div>
 
                 </div>
 
 
-                <div class="suggestions-box">
 
-                    <h4>
-                        🚀 CareerPilot Recommendations
-                    </h4>
+                <!-- MATCHED -->
 
-                    <ul
-                        id="suggestionsList"
-                    ></ul>
+                <div class="skills-section">
+
+                    <div class="result-section-title">
+
+                        <h4>
+                            Matched Skills
+                        </h4>
+
+                        <span>
+                            FOUND
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="matchedSkills"
+                        class="skills-list"
+                    ></div>
 
                 </div>
+
+
+
+                <!-- MISSING -->
+
+                <div class="skills-section">
+
+                    <div class="result-section-title">
+
+                        <h4>
+                            Missing Skills
+                        </h4>
+
+                        <span>
+                            IMPROVE
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="missingSkills"
+                        class="skills-list"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- PRIORITY KEYWORDS -->
+
+                <div class="skills-section">
+
+                    <div class="result-section-title">
+
+                        <h4>
+                            Priority Keywords
+                        </h4>
+
+                        <span>
+                            TOP 10
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="priorityKeywords"
+                        class="skills-list"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- SUGGESTIONS -->
+
+                <div class="suggestions-section">
+
+                    <div class="result-section-title">
+
+                        <h4>
+                            AI Suggestions
+                        </h4>
+
+                        <span>
+                            CAREERPILOT
+                        </span>
+
+                    </div>
+
+
+                    <ul id="suggestionsList"></ul>
+
+                </div>
+
 
             </div>
 
-        </section>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-        <!-- =====================================
-             CERTIFICATIONS
-        ====================================== -->
 
-        <section
-            id="certifications"
-            class="section"
-        >
+<!-- =====================================================
+     SKILLS
+===================================================== -->
 
-            <div class="section-heading">
+<section class="skills-section-page">
 
-                <span class="section-label">
-                    ACHIEVEMENTS
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                TECHNICAL STACK
+            </span>
+
+            <h2>
+                Skills That Power
+                The Journey
+            </h2>
+
+            <p>
+                A combination of programming, analytics,
+                machine learning, web development and tools.
+            </p>
+
+        </div>
+
+
+        <div class="skills-cloud">
+
+
+            <span>C</span>
+            <span>C++</span>
+            <span>Python</span>
+            <span>Java</span>
+            <span>JavaScript</span>
+            <span>Node.js</span>
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>Bootstrap</span>
+            <span>PHP</span>
+            <span>Flask</span>
+            <span>TensorFlow</span>
+            <span>Keras</span>
+            <span>OpenCV</span>
+            <span>NumPy</span>
+            <span>Pandas</span>
+            <span>Matplotlib</span>
+            <span>Seaborn</span>
+            <span>Power BI</span>
+            <span>Tableau</span>
+            <span>SQL</span>
+            <span>MongoDB</span>
+            <span>JDBC</span>
+            <span>Git</span>
+            <span>VS Code</span>
+            <span>Google Colab</span>
+            <span>Jupyter Notebook</span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EXPERIENCE
+===================================================== -->
+
+<section
+    class="experience"
+    id="experience"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                EXPERIENCE
+            </span>
+
+            <h2>
+                Building Experience
+                Through Real Projects
+            </h2>
+
+            <p>
+                Internship experience across railway communication,
+                cloud computing and robotics.
+            </p>
+
+        </div>
+
+
+        <div class="experience-grid">
+
+
+            <!-- ECR -->
+
+            <article class="experience-card">
+
+                <div class="experience-top">
+
+                    <span class="experience-date">
+                        JUN 2025 — JUL 2025
+                    </span>
+
+                    <span class="experience-tag">
+                        INTERNSHIP
+                    </span>
+
+                </div>
+
+
+                <h3>
+                    Signal & Telecommunication Intern
+                </h3>
+
+
+                <h4>
+                    East Central Railway — Danapur Division
+                </h4>
+
+
+                <p>
+                    Worked with railway communication infrastructure,
+                    network operations and maintenance systems.
+                    Exposure included Optical Fibre Communication,
+                    Telephone Exchange, PRS/UTS and Mobile Train
+                    Radio Communication.
+                </p>
+
+
+                <div class="tech-tags">
+
+                    <span>OFC</span>
+                    <span>Networking</span>
+                    <span>Railway Communication</span>
+                    <span>PRS/UTS</span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- CLOUD -->
+
+            <article class="experience-card">
+
+                <div class="experience-top">
+
+                    <span class="experience-date">
+                        DEC 2025
+                    </span>
+
+                    <span class="experience-tag">
+                        INTERNSHIP
+                    </span>
+
+                </div>
+
+
+                <h3>
+                    Cloud Computing Intern
+                </h3>
+
+
+                <h4>
+                    Aagaaz Training Centre Pvt. Ltd.
+                </h4>
+
+
+                <p>
+                    Completed a 4-week remote internship focused on
+                    cloud computing concepts, virtualization and
+                    cloud service models, achieving 88% overall
+                    performance.
+                </p>
+
+
+                <div class="tech-tags">
+
+                    <span>Cloud Computing</span>
+                    <span>Virtualization</span>
+                    <span>88% Performance</span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ROBOTICS -->
+
+            <article class="experience-card">
+
+                <div class="experience-top">
+
+                    <span class="experience-date">
+                        JAN 2024 — FEB 2024
+                    </span>
+
+                    <span class="experience-tag">
+                        INTERNSHIP
+                    </span>
+
+                </div>
+
+
+                <h3>
+                    Robotics Intern
+                </h3>
+
+
+                <h4>
+                    InfinityCore Technologies — BlinkSkills
+                </h4>
+
+
+                <p>
+                    Worked on robotics assignments involving
+                    automation and practical problem-solving,
+                    achieving 92% assessment performance.
+                </p>
+
+
+                <div class="tech-tags">
+
+                    <span>Robotics</span>
+                    <span>Automation</span>
+                    <span>92% Assessment</span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROJECTS
+===================================================== -->
+
+<section
+    class="projects"
+    id="projects"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                PROJECTS
+            </span>
+
+            <h2>
+                Projects Built To Solve
+                Real Problems
+            </h2>
+
+            <p>
+                Practical engineering, machine learning,
+                analytics and full-stack projects.
+            </p>
+
+        </div>
+
+
+        <div class="project-grid">
+
+
+            <!-- ECOSENTINEL -->
+
+            <article class="project-card project-featured">
+
+                <div class="project-number">
+                    01
+                </div>
+
+
+                <div class="project-content">
+
+                    <span class="project-label">
+                        FULL-STACK • IOT
+                    </span>
+
+
+                    <h3>
+                        EcoSentinel
+                    </h3>
+
+
+                    <p>
+                        IoT-based wildlife conservation platform
+                        with real-time monitoring and simulated
+                        GPS/biometric tracking.
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+                            Real-time wildlife tracking dashboard
+                        </li>
+
+                        <li>
+                            Leaflet live map integration
+                        </li>
+
+                        <li>
+                            Socket.io alerts for geofence breaches,
+                            abnormal vitals and low battery
+                        </li>
+
+                        <li>
+                            Role-based JWT authentication
+                        </li>
+
+                    </ul>
+
+
+                    <div class="tech-tags">
+
+                        <span>MERN</span>
+                        <span>Socket.io</span>
+                        <span>JWT</span>
+                        <span>REST API</span>
+                        <span>IoT</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- BRAIN TUMOR -->
+
+            <article class="project-card">
+
+                <div class="project-number">
+                    02
+                </div>
+
+
+                <span class="project-label">
+                    DEEP LEARNING
                 </span>
 
+
+                <h3>
+                    Brain Tumor Detection
+                </h3>
+
+
+                <p>
+                    CNN-based MRI image classification system
+                    for brain tumor detection.
+                </p>
+
+
+                <div class="project-highlight">
+
+                    <span>
+                        CNN
+                    </span>
+
+                    <span>
+                        TensorFlow
+                    </span>
+
+                    <span>
+                        Keras
+                    </span>
+
+                    <span>
+                        OpenCV
+                    </span>
+
+                </div>
+
+
+                <p class="project-small">
+
+                    Includes preprocessing, augmentation,
+                    BatchNorm, Dropout, confusion matrix,
+                    accuracy, loss and classification report.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- CRICKET -->
+
+            <article class="project-card">
+
+                <div class="project-number">
+                    03
+                </div>
+
+
+                <span class="project-label">
+                    MACHINE LEARNING
+                </span>
+
+
+                <h3>
+                    Cricket Score Predictor
+                </h3>
+
+
+                <p>
+                    Machine learning model that predicts final
+                    cricket scores from historical and match
+                    conditions.
+                </p>
+
+
+                <div class="project-highlight">
+
+                    <span>
+                        Python
+                    </span>
+
+                    <span>
+                        XGBoost
+                    </span>
+
+                    <span>
+                        Pandas
+                    </span>
+
+                    <span>
+                        Scikit-learn
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ENTERPRISE SALES -->
+
+            <article class="project-card">
+
+                <div class="project-number">
+                    04
+                </div>
+
+
+                <span class="project-label">
+                    DATA ANALYTICS
+                </span>
+
+
+                <h3>
+                    Enterprise Sales Analytics
+                </h3>
+
+
+                <p>
+                    Sales intelligence and customer analytics
+                    engine combining Python, SQL and Power BI.
+                </p>
+
+
+                <div class="project-highlight">
+
+                    <span>
+                        Python ETL
+                    </span>
+
+                    <span>
+                        SQL
+                    </span>
+
+                    <span>
+                        Power BI
+                    </span>
+
+                    <span>
+                        DAX
+                    </span>
+
+                </div>
+
+
+                <p class="project-small">
+
+                    Includes Star Schema warehouse,
+                    K-Means RFM segmentation and cohort
+                    retention analysis.
+
+                </p>
+
+            </article>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CERTIFICATIONS
+===================================================== -->
+
+<section
+    class="certifications"
+    id="certifications"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                CERTIFICATIONS & CREDENTIALS
+            </span>
+
+            <h2>
+                Continuous Learning
+            </h2>
+
+            <p>
+                Professional learning across cloud, data,
+                software engineering, cybersecurity and AI.
+            </p>
+
+        </div>
+
+
+        <div class="certification-grid">
+
+
+            <article class="cert-card">
+                <span>AWS</span>
+                <h3>
+                    Data Engineering on AWS: Foundations
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>CISCO</span>
+                <h3>
+                    Data Analytics Essentials
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>JPMORGAN CHASE</span>
+                <h3>
+                    Software Engineering Job Simulation
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>SAP</span>
+                <h3>
+                    Leveraging Advanced Features in SAP Analytics Cloud for Planning
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>SAP</span>
+                <h3>
+                    Introducing SAP Business Data Cloud
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>SAP</span>
+                <h3>
+                    Learning Basic ABAP Programming
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>AWS</span>
+                <h3>
+                    Foundations of Prompt Engineering
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>CISCO</span>
+                <h3>
+                    Data Science Essentials with Python
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>DELOITTE</span>
+                <h3>
+                    Data Analytics Job Simulation
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>TATA</span>
+                <h3>
+                    GenAI Powered Data Analytics Job Simulation
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>MASTERCARD</span>
+                <h3>
+                    Cybersecurity Job Simulation
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>NPTEL • IIT KHARAGPUR</span>
+                <h3>
+                    Introduction to Internet of Things
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>NPTEL • IIT KHARAGPUR</span>
+                <h3>
+                    Soft Skill Development
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>YBI FOUNDATION</span>
+                <h3>
+                    Data Science and Machine Learning
+                </h3>
+            </article>
+
+
+            <article class="cert-card">
+                <span>SKILLS4INDIA</span>
+                <h3>
+                    Python Certification
+                </h3>
+            </article>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EDUCATION
+===================================================== -->
+
+<section class="education">
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                EDUCATION
+            </span>
+
+            <h2>
+                Academic Foundation
+            </h2>
+
+        </div>
+
+
+        <div class="education-timeline">
+
+
+            <article class="education-card">
+
+                <span>
+                    2022 — 2026
+                </span>
+
+                <h3>
+                    B.Tech — Computer Science & Engineering
+                </h3>
+
+                <h4>
+                    Shershah Engineering College, Sasaram
+                </h4>
+
+            </article>
+
+
+            <article class="education-card">
+
+                <span>
+                    2018 — 2020
+                </span>
+
+                <h3>
+                    Intermediate — Science, PCM
+                </h3>
+
+                <h4>
+                    RB College, Dalsingsaray
+                </h4>
+
+            </article>
+
+
+            <article class="education-card">
+
+                <span>
+                    2017 — 2018
+                </span>
+
+                <h3>
+                    High School
+                </h3>
+
+                <h4>
+                    JPNS Narhan
+                </h4>
+
+            </article>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ABOUT BUILDER
+===================================================== -->
+
+<section
+    class="about"
+    id="about"
+>
+
+    <div class="container">
+
+
+        <div class="about-builder">
+
+
+            <div class="about-visual">
+
+
+                <div class="profile-orb">
+
+                    <div>
+                        PK
+                    </div>
+
+                </div>
+
+
+                <span class="orbit-label orbit-label-one">
+                    SOFTWARE
+                </span>
+
+                <span class="orbit-label orbit-label-two">
+                    DATA
+                </span>
+
+                <span class="orbit-label orbit-label-three">
+                    AI
+                </span>
+
+
+            </div>
+
+
+
+            <div class="about-content">
+
+
+                <span class="section-label">
+                    ABOUT THE BUILDER
+                </span>
+
+
                 <h2>
-                    Certifications &
-                    <span class="gradient-text">
-                        Credentials
+                    Meet
+                    <span>
+                        Priyanshu Kumar
                     </span>
                 </h2>
 
+
                 <p>
-                    Professional learning and technical
-                    credentials.
+
+                    Computer Science & Engineering graduate focused
+                    on software engineering, data analytics,
+                    machine learning and practical AI-powered
+                    applications.
+
+                </p>
+
+
+                <p>
+
+                    CareerPilot AI represents the vision of building
+                    practical technology that helps students and
+                    professionals make better career decisions.
+
+                </p>
+
+
+                <div class="about-links">
+
+
+                    <a
+                        href="https://github.com/priyanshu18611"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                        ↗
+                    </a>
+
+
+                    <a
+                        href="https://www.linkedin.com/in/priyanshuroy18/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        LinkedIn
+                        ↗
+                    </a>
+
+
+                    <a
+                        href="https://priyanshu18611.github.io/portfolio/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Portfolio
+                        ↗
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL CTA
+===================================================== -->
+
+<section class="final-cta">
+
+    <div class="container">
+
+
+        <div class="cta-card">
+
+
+            <div>
+
+                <span>
+                    CAREERPILOT AI
+                </span>
+
+                <h2>
+                    Your Career.
+                    Your Next Move.
+                    Smarter.
+                </h2>
+
+                <p>
+                    Analyze. Improve. Grow.
                 </p>
 
             </div>
 
 
-            <div class="certification-grid">
-
-
-                <article class="certificate-card">
-
-                    <div class="certificate-icon">
-                        🏆
-                    </div>
-
-                    <div>
-
-                        <span class="certificate-label">
-                            CERTIFICATION
-                        </span>
-
-                        <h3>
-                            Technical Certification
-                        </h3>
-
-                        <p>
-                            Add your certification details
-                            here.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <article class="certificate-card">
-
-                    <div class="certificate-icon">
-                        📜
-                    </div>
-
-                    <div>
-
-                        <span class="certificate-label">
-                            CERTIFICATION
-                        </span>
-
-                        <h3>
-                            Professional Credential
-                        </h3>
-
-                        <p>
-                            Add your certificate name,
-                            organization and year.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <article class="certificate-card">
-
-                    <div class="certificate-icon">
-                        ⭐
-                    </div>
-
-                    <div>
-
-                        <span class="certificate-label">
-                            ACHIEVEMENT
-                        </span>
-
-                        <h3>
-                            Career Achievement
-                        </h3>
-
-                        <p>
-                            Showcase your important
-                            technical achievement.
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             ABOUT
-        ====================================== -->
-
-        <section
-            id="about"
-            class="section about-section"
-        >
-
-            <div class="about-card">
-
-                <div class="about-content">
-
-                    <span class="section-label">
-                        ABOUT THE BUILDER
-                    </span>
-
-
-                    <h2>
-
-                        Meet
-                        <span class="gradient-text">
-                            Priyanshu Kumar
-                        </span>
-
-                    </h2>
-
-
-                    <p>
-
-                        CareerPilot AI is a startup-style
-                        career intelligence project created
-                        by Priyanshu Kumar, a Computer Science
-                        Engineering graduate and software
-                        development enthusiast.
-
-                    </p>
-
-
-                    <p>
-
-                        The platform combines resume
-                        intelligence, ATS analysis,
-                        skill-gap detection and modern
-                        web technologies to create a
-                        practical career assistant.
-
-                    </p>
-
-
-                    <div class="builder-tags">
-
-                        <span>
-                            CSE
-                        </span>
-
-                        <span>
-                            Software Engineer
-                        </span>
-
-                        <span>
-                            Python
-                        </span>
-
-                        <span>
-                            AI/ML
-                        </span>
-
-                        <span>
-                            Full Stack
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="builder-visual">
-
-                    <div class="builder-ring">
-
-                        <div class="builder-avatar">
-                            PK
-                        </div>
-
-                    </div>
-
-                    <div class="builder-name">
-                        Priyanshu Kumar
-                    </div>
-
-                    <div class="builder-role">
-                        Developer • Builder • Learner
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <div class="footer-brand">
-
-                <div class="footer-logo">
-                    CP
-                </div>
-
-                <div>
-
-                    <strong>
-                        CareerPilot AI
-                    </strong>
-
-                    <span>
-                        Career Intelligence Platform
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-center">
+            <button
+                class="primary-btn"
+                type="button"
+            >
+
+                Start Analyzing
 
                 <span>
-                    Built with ❤️ by
+                    →
                 </span>
 
-                <strong>
-                    Priyanshu Kumar
-                </strong>
+            </button>
 
-            </div>
-
-
-            <div class="footer-links">
-
-                <a
-                    href="https://github.com/priyanshu18611"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    GitHub
-                </a>
-
-                <a
-                    href="https://www.linkedin.com/in/priyanshuroy18/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    LinkedIn
-                </a>
-
-            </div>
 
         </div>
 
 
-        <div class="footer-bottom">
+    </div>
 
-            © 2026 CareerPilot AI •
-            Built by Priyanshu Kumar
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="container footer-container">
+
+
+        <div class="footer-brand">
+
+
+            <a
+                href="#"
+                class="logo"
+            >
+
+                <span class="logo-mark">
+
+                    <span class="logo-cp">
+                        CP
+                    </span>
+
+                    <span class="logo-orbit"></span>
+
+                </span>
+
+
+                <span class="logo-text">
+                    CareerPilot<span>AI</span>
+                </span>
+
+            </a>
+
+
+            <p>
+                AI-powered career intelligence for the
+                next generation of professionals.
+            </p>
+
 
         </div>
 
-    </footer>
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+        <div class="footer-links">
 
-    <script src="config.js"></script>
 
-    <script src="script.js"></script>
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#analyzer">
+                Analyzer
+            </a>
+
+            <a href="#projects">
+                Projects
+            </a>
+
+            <a href="#certifications">
+                Certifications
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-social">
+
+
+            <a
+                href="https://github.com/priyanshu18611"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+
+
+            <a
+                href="https://www.linkedin.com/in/priyanshuroy18/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                LinkedIn
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <p>
+                © 2026 CareerPilot AI
+                <span>•</span>
+                Built by Priyanshu Kumar
+            </p>
+
+            <span>
+                SOFTWARE × DATA × AI
+            </span>
+
+        </div>
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
+
+<script src="config.js"></script>
+
+<script src="script.js"></script>
+
 
 </body>
 
