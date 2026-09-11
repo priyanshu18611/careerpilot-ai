@@ -8,9 +8,10 @@ from resume_parser import extract_text
 from ats_analyzer import calculate_ats_score
 from job_matcher import calculate_match_score
 
-# =========================================
+
+# ============================================================
 # RESPONSE MODELS
-# =========================================
+# ============================================================
 
 class AnalysisResponse(BaseModel):
 
@@ -70,10 +71,9 @@ class AnalysisResponse(BaseModel):
 class ResumeAnalysisResponse(BaseModel):
 
     status: str
-
     filename: str
-
     analysis: AnalysisResponse
+
 
 class JobMatchResponse(BaseModel):
 
@@ -81,26 +81,30 @@ class JobMatchResponse(BaseModel):
 
     filename: str
 
-    target_role: str
+    target_role: str = ""
 
     match_score: int = Field(
+        default=0,
         ge=0,
         le=100
     )
 
-    match_level: str
+    match_level: str = ""
 
     skill_match_score: int = Field(
+        default=0,
         ge=0,
         le=100
     )
 
     keyword_overlap_score: int = Field(
+        default=0,
         ge=0,
         le=100
     )
 
     role_fit_score: int = Field(
+        default=0,
         ge=0,
         le=100
     )
@@ -120,9 +124,11 @@ class JobMatchResponse(BaseModel):
     recommendations: list[str] = Field(
         default_factory=list
     )
-# =========================================
+
+
+# ============================================================
 # FASTAPI APPLICATION
-# =========================================
+# ============================================================
 
 app = FastAPI(
     title="CareerPilot AI",
@@ -142,76 +148,62 @@ app = FastAPI(
 )
 
 
-# =========================================
-# CORS CONFIGURATION
-# =========================================
+# ============================================================
+# CORS
+# ============================================================
 
 ALLOWED_ORIGINS = [
-    "https://priyanshu18611.github.io"
+    "https://priyanshu18611.github.io",
+    "https://priyanshu18611.github.io/careerpilot-ai"
 ]
 
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=[
-        "GET",
-        "POST",
-        "OPTIONS"
-    ],
-    allow_headers=[
-        "Content-Type"
-    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 
-# =========================================
+# ============================================================
 # UPLOAD CONFIGURATION
-# =========================================
+# ============================================================
 
 UPLOAD_DIR = Path("uploads")
-
-UPLOAD_DIR.mkdir(
-    exist_ok=True
-)
-
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 ALLOWED_EXTENSIONS = {
     ".pdf",
     ".docx"
 }
 
-
 ALLOWED_CONTENT_TYPES = {
 
     ".pdf": {
-        "application/pdf"
+        "application/pdf",
+        "application/octet-stream"
     },
 
     ".docx": {
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/octet-stream"
     }
 }
 
-
 MAX_FILE_SIZE = 10 * 1024 * 1024
-
 CHUNK_SIZE = 1024 * 1024
 
 
-# =========================================
-# ROOT ENDPOINT
-# =========================================
+# ============================================================
+# ROOT
+# ============================================================
 
 @app.get(
     "/",
     tags=["CareerPilot AI"],
-    summary="CareerPilot AI API",
-    description=(
-        "CareerPilot AI backend API. "
-        "Built by Priyanshu Kumar."
-    )
+    summary="CareerPilot AI API"
 )
 def home():
 
@@ -223,18 +215,14 @@ def home():
     }
 
 
-# =========================================
+# ============================================================
 # HEALTH CHECK
-# =========================================
+# ============================================================
 
 @app.get(
     "/api/health",
     tags=["CareerPilot AI"],
-    summary="API Health Check",
-    description=(
-        "Check the health status of "
-        "CareerPilot AI backend service."
-    )
+    summary="API Health Check"
 )
 def health():
 
@@ -245,29 +233,11 @@ def health():
     }
 
 
-# =========================================
-# RESUME ANALYZER
-# =========================================
+# ============================================================
+# HELPER: VALIDATE FILE
+# ============================================================
 
-@app.post(
-    "/api/analyze-resume",
-    response_model=ResumeAnalysisResponse,
-    tags=["Resume Intelligence"],
-    summary="Analyze Resume with ATS Intelligence",
-    description=(
-        "Analyze a PDF or DOCX resume against "
-        "a job description using CareerPilot AI "
-        "ATS intelligence."
-    )
-)
-async def analyze_resume(
-    file: UploadFile = File(...),
-    job_description: str = Form("")
-):
-
-    # -----------------------------------------
-    # FILE NAME VALIDATION
-    # -----------------------------------------
+def validate_resume_file(file: UploadFile):
 
     if not file.filename:
 
@@ -276,24 +246,13 @@ async def analyze_resume(
             detail="No resume selected."
         )
 
-
-    # -----------------------------------------
-    # SANITIZE ORIGINAL FILE NAME
-    # -----------------------------------------
-
     original_filename = Path(
         file.filename
     ).name
 
-
-    # -----------------------------------------
-    # EXTENSION VALIDATION
-    # -----------------------------------------
-
     extension = Path(
         original_filename
     ).suffix.lower()
-
 
     if extension not in ALLOWED_EXTENSIONS:
 
@@ -305,14 +264,9 @@ async def analyze_resume(
             )
         )
 
+    content_type = file.content_type
 
-    # -----------------------------------------
-    # MIME TYPE VALIDATION
-    # -----------------------------------------
-
-    if file.content_type not in ALLOWED_CONTENT_TYPES[
-        extension
-    ]:
+    if content_type not in ALLOWED_CONTENT_TYPES[extension]:
 
         raise HTTPException(
             status_code=400,
@@ -322,30 +276,29 @@ async def analyze_resume(
             )
         )
 
+    return original_filename, extension
 
-    # -----------------------------------------
-    # SAFE UNIQUE FILE NAME
-    # -----------------------------------------
+
+# ============================================================
+# HELPER: SAVE TEMPORARY FILE
+# ============================================================
+
+async def save_upload_file(
+    file: UploadFile,
+    extension: str
+):
 
     unique_filename = (
         f"{uuid.uuid4().hex}{extension}"
     )
 
-
     file_path = (
-        UPLOAD_DIR
-        / unique_filename
+        UPLOAD_DIR / unique_filename
     )
-
 
     total_size = 0
 
-
     try:
-
-        # -----------------------------------------
-        # CHUNKED FILE WRITE
-        # -----------------------------------------
 
         with open(
             file_path,
@@ -358,19 +311,10 @@ async def analyze_resume(
                     CHUNK_SIZE
                 )
 
-
                 if not chunk:
                     break
 
-
-                total_size += len(
-                    chunk
-                )
-
-
-                # -----------------------------------------
-                # HARD FILE SIZE LIMIT
-                # -----------------------------------------
+                total_size += len(chunk)
 
                 if total_size > MAX_FILE_SIZE:
 
@@ -382,22 +326,61 @@ async def analyze_resume(
                         )
                     )
 
+                output.write(chunk)
 
-                output.write(
-                    chunk
-                )
+        return file_path
+
+    except HTTPException:
+
+        if file_path.exists():
+            file_path.unlink()
+
+        raise
+
+    except Exception:
+
+        if file_path.exists():
+            file_path.unlink()
+
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to save uploaded resume."
+        )
 
 
-        # -----------------------------------------
-        # EXTRACT RESUME TEXT
-        # -----------------------------------------
+# ============================================================
+# RESUME ANALYZER
+# ============================================================
+
+@app.post(
+    "/api/analyze-resume",
+    response_model=ResumeAnalysisResponse,
+    tags=["Resume Intelligence"],
+    summary="Analyze Resume with ATS Intelligence"
+)
+async def analyze_resume(
+    file: UploadFile = File(...),
+    job_description: str = Form("")
+):
+
+    original_filename, extension = validate_resume_file(
+        file
+    )
+
+    file_path = None
+
+    try:
+
+        file_path = await save_upload_file(
+            file,
+            extension
+        )
 
         resume_text = extract_text(
             str(file_path)
         )
 
-
-        if not resume_text:
+        if not resume_text or not resume_text.strip():
 
             raise HTTPException(
                 status_code=400,
@@ -407,20 +390,20 @@ async def analyze_resume(
                 )
             )
 
-
-        # -----------------------------------------
-        # ATS V2 ANALYSIS
-        # -----------------------------------------
-
         analysis = calculate_ats_score(
             resume_text,
             job_description
         )
 
+        if not isinstance(analysis, dict):
 
-        # -----------------------------------------
-        # API RESPONSE
-        # -----------------------------------------
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "ATS analyzer returned "
+                    "an invalid response."
+                )
+            )
 
         return {
             "status": "success",
@@ -428,13 +411,16 @@ async def analyze_resume(
             "analysis": analysis
         }
 
-
     except HTTPException:
 
         raise
 
+    except Exception as error:
 
-    except Exception:
+        print(
+            "Resume analysis error:",
+            repr(error)
+        )
 
         raise HTTPException(
             status_code=500,
@@ -444,48 +430,28 @@ async def analyze_resume(
             )
         )
 
-
     finally:
 
-        # -----------------------------------------
-        # DELETE TEMPORARY RESUME
-        # -----------------------------------------
-
-        if file_path.exists():
-
+        if file_path and file_path.exists():
             file_path.unlink()
-
 
         await file.close()
 
 
-# =========================================
+# ============================================================
 # JOB MATCHER
-# =========================================
+# ============================================================
 
 @app.post(
     "/api/job-match",
     response_model=JobMatchResponse,
     tags=["Job Intelligence"],
-    summary="Match Resume with Target Job",
-    description=(
-        "Match a PDF or DOCX resume against "
-        "a target job description using "
-        "CareerPilot AI Job Matching Engine."
-    )
+    summary="Match Resume with Target Job"
 )
 async def job_match(
     file: UploadFile = File(...),
     job_description: str = Form("")
 ):
-
-    if not file.filename:
-
-        raise HTTPException(
-            status_code=400,
-            detail="No resume selected."
-        )
-
 
     if not job_description.strip():
 
@@ -494,98 +460,24 @@ async def job_match(
             detail="Job description is required."
         )
 
-
-    original_filename = Path(
-        file.filename
-    ).name
-
-
-    extension = Path(
-        original_filename
-    ).suffix.lower()
-
-
-    if extension not in ALLOWED_EXTENSIONS:
-
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Only PDF and DOCX resumes "
-                "are currently supported."
-            )
-        )
-
-
-    if file.content_type not in ALLOWED_CONTENT_TYPES[
-        extension
-    ]:
-
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Invalid file type. "
-                "Please upload a valid PDF or DOCX resume."
-            )
-        )
-
-
-    unique_filename = (
-        f"{uuid.uuid4().hex}{extension}"
-    )
-    
-    file_path = (
-        UPLOAD_DIR
-        / unique_filename
+    original_filename, extension = validate_resume_file(
+        file
     )
 
-
-    total_size = 0
-
+    file_path = None
 
     try:
 
-        with open(
-            file_path,
-            "wb"
-        ) as output:
-
-            while True:
-
-                chunk = await file.read(
-                    CHUNK_SIZE
-                )
-
-                if not chunk:
-                    break
-
-
-                total_size += len(
-                    chunk
-                )
-
-
-                if total_size > MAX_FILE_SIZE:
-
-                    raise HTTPException(
-                        status_code=400,
-                        detail=(
-                            "Resume must be "
-                            "smaller than 10 MB."
-                        )
-                    )
-
-
-                output.write(
-                    chunk
-                )
-
+        file_path = await save_upload_file(
+            file,
+            extension
+        )
 
         resume_text = extract_text(
             str(file_path)
         )
 
-
-        if not resume_text:
+        if not resume_text or not resume_text.strip():
 
             raise HTTPException(
                 status_code=400,
@@ -595,30 +487,93 @@ async def job_match(
                 )
             )
 
-
         analysis = calculate_match_score(
             resume_text,
             job_description
         )
 
+        if not isinstance(analysis, dict):
 
-        return {
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Job matcher returned "
+                    "an invalid response."
+                )
+            )
+
+        # ----------------------------------------------------
+        # SAFE RESPONSE
+        # ----------------------------------------------------
+
+        result = {
+
             "status": "success",
+
             "filename": original_filename,
-            **analysis
+
+            "target_role": analysis.get(
+                "target_role",
+                ""
+            ),
+
+            "match_score": analysis.get(
+                "match_score",
+                0
+            ),
+
+            "match_level": analysis.get(
+                "match_level",
+                ""
+            ),
+
+            "skill_match_score": analysis.get(
+                "skill_match_score",
+                0
+            ),
+
+            "keyword_overlap_score": analysis.get(
+                "keyword_overlap_score",
+                0
+            ),
+
+            "role_fit_score": analysis.get(
+                "role_fit_score",
+                0
+            ),
+
+            "matched_skills": analysis.get(
+                "matched_skills",
+                []
+            ),
+
+            "missing_skills": analysis.get(
+                "missing_skills",
+                []
+            ),
+
+            "priority_skills": analysis.get(
+                "priority_skills",
+                []
+            ),
+
+            "recommendations": analysis.get(
+                "recommendations",
+                []
+            )
         }
 
+        return result
 
     except HTTPException:
 
         raise
 
-
     except Exception as error:
 
         print(
             "Job matching error:",
-            error
+            repr(error)
         )
 
         raise HTTPException(
@@ -629,12 +584,9 @@ async def job_match(
             )
         )
 
-
     finally:
 
-        if file_path.exists():
-
+        if file_path and file_path.exists():
             file_path.unlink()
-
 
         await file.close()
