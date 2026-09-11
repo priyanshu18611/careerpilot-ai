@@ -635,3 +635,202 @@ async def job_match(
 
 
         await file.close()
+@app.post(
+    "/api/career-roadmap",
+    tags=["Career Intelligence"],
+    summary="Generate Personalized Career Roadmap",
+    description=(
+        "Generate a personalized skill-gap and "
+        "30/60/90-day learning roadmap from "
+        "a resume and target job description."
+    )
+)
+async def career_roadmap(
+    file: UploadFile = File(...),
+    job_description: str = Form("")
+):
+
+    if not file.filename:
+
+        raise HTTPException(
+            status_code=400,
+            detail="No resume selected."
+        )
+
+
+    if not job_description.strip():
+
+        raise HTTPException(
+            status_code=400,
+            detail="Job description is required."
+        )
+
+
+    original_filename = Path(
+        file.filename
+    ).name
+
+
+    extension = Path(
+        original_filename
+    ).suffix.lower()
+
+
+    if extension not in ALLOWED_EXTENSIONS:
+
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Only PDF and DOCX resumes "
+                "are currently supported."
+            )
+        )
+
+
+    if file.content_type not in ALLOWED_CONTENT_TYPES[
+        extension
+    ]:
+
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Invalid file type. "
+                "Please upload a valid PDF or DOCX resume."
+            )
+        )
+
+
+    unique_filename = (
+        f"{uuid.uuid4().hex}{extension}"
+    )
+
+
+    file_path = (
+        UPLOAD_DIR
+        / unique_filename
+    )
+
+
+    total_size = 0
+
+
+    try:
+
+        with open(
+            file_path,
+            "wb"
+        ) as output:
+
+            while True:
+
+                chunk = await file.read(
+                    CHUNK_SIZE
+                )
+
+                if not chunk:
+                    break
+
+
+                total_size += len(
+                    chunk
+                )
+
+
+                if total_size > MAX_FILE_SIZE:
+
+                    raise HTTPException(
+                        status_code=400,
+                        detail=(
+                            "Resume must be "
+                            "smaller than 10 MB."
+                        )
+                    )
+
+
+                output.write(
+                    chunk
+                )
+
+
+        resume_text = extract_text(
+            str(file_path)
+        )
+
+
+        if not resume_text:
+
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "Could not extract readable "
+                    "text from the resume."
+                )
+            )
+
+
+        job_match = calculate_match_score(
+            resume_text,
+            job_description
+        )
+
+
+        missing_skills = (
+            job_match.get(
+                "missing_skills",
+                []
+            )
+        )
+
+
+        target_role = (
+            job_match.get(
+                "target_role",
+                "Technology Role"
+            )
+        )
+
+
+        roadmap = create_career_roadmap(
+            missing_skills,
+            target_role
+        )
+
+
+        return {
+            "status": "success",
+            "filename": original_filename,
+            "target_role": target_role,
+            "job_match": job_match,
+            "roadmap": roadmap
+        }
+
+
+    except HTTPException:
+
+        raise
+
+
+    except Exception as error:
+
+        print(
+            "Career roadmap error:",
+            error
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Career roadmap generation failed. "
+                "Please try again."
+            )
+        )
+
+
+    finally:
+
+        if file_path.exists():
+
+            file_path.unlink()
+
+
+        await file.close()
