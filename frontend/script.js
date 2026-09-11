@@ -509,7 +509,26 @@ function displayJobMatch(
             analysis.match_score ?? "--";
 
     }
+const score =
+    Number(analysis.match_score) || 0;
 
+const scoreRing =
+    document.querySelector(".match-score-ring");
+
+if (scoreRing) {
+
+    const degrees =
+        Math.min(Math.max(score, 0), 100) * 3.6;
+
+    scoreRing.style.background =
+        `conic-gradient(
+            #ff6a00 0deg,
+            #ff9a3d ${degrees}deg,
+            rgba(255,255,255,.08) ${degrees}deg,
+            rgba(255,255,255,.08) 360deg
+        )`;
+
+}
 
     if (jobMatchLevel) {
 
