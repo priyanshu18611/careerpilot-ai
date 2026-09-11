@@ -3640,3 +3640,604 @@ textarea:focus-visible {
         3px;
 
 }
+/* =========================================================
+   CAREERPILOT AI — JOB MATCH ENGINE
+========================================================= */
+
+.job-match-section {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-match-section::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: 5%;
+    left: -180px;
+    border-radius: 50%;
+    background: rgba(255, 106, 0, 0.08);
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+.job-match-section .section-heading {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.job-match-card {
+    width: min(
+        100%,
+        var(--container, 1180px)
+    );
+
+    margin: 45px auto 0;
+
+    padding: 30px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.35);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.job-match-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 28px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+}
+
+.match-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.18em;
+
+    color:
+        rgba(255, 255, 255, 0.45);
+}
+
+.job-match-header h3 {
+    margin: 0;
+
+    font-size: clamp(
+        24px,
+        4vw,
+        38px
+    );
+
+    font-weight: 800;
+
+    letter-spacing: -0.03em;
+}
+
+
+/* =========================================================
+   SCORE RING
+========================================================= */
+
+.match-score-ring {
+    width: 118px;
+
+    height: 118px;
+
+    flex: 0 0 118px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #ff6a00 0deg,
+            #ff9a3d 260deg,
+            rgba(255,255,255,.08) 260deg,
+            rgba(255,255,255,.08) 360deg
+        );
+
+    position: relative;
+}
+
+.match-score-ring::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 8px;
+
+    border-radius: 50%;
+
+    background:
+        #0c0c10;
+}
+
+.match-score-value {
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.match-score-value strong {
+    font-size: 30px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    color: #ff8a2b;
+}
+
+.match-score-value span {
+    margin-top: 5px;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+
+    color:
+        rgba(255,255,255,.45);
+}
+
+
+/* =========================================================
+   MATCH LEVEL
+========================================================= */
+
+.job-match-level {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 22px;
+
+    padding: 8px 14px;
+
+    border:
+        1px solid rgba(255, 106, 0, .2);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 106, 0, .08);
+
+    color: #ff963f;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: .04em;
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.job-match-metrics {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+.match-metric {
+    padding: 18px;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.match-metric span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    color:
+        rgba(255,255,255,.45);
+}
+
+.match-metric strong {
+    font-size: 22px;
+
+    font-weight: 800;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   TWO SKILL PANELS
+========================================================= */
+
+.job-match-columns {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+
+    margin-top: 16px;
+}
+
+.job-skill-panel,
+.priority-skills-panel,
+.job-recommendation-panel {
+    padding: 22px;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   PANEL TITLE
+========================================================= */
+
+.panel-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.panel-title strong {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+.panel-title small {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    color:
+        rgba(255,255,255,.4);
+}
+
+.panel-icon {
+    width: 34px;
+
+    height: 34px;
+
+    display: grid;
+
+    place-items: center;
+
+    flex: 0 0 34px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,106,0,.1);
+
+    color: #ff8a2b;
+
+    font-size: 15px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   SKILL LIST
+========================================================= */
+
+.job-skill-list,
+.priority-skill-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.job-skill-list .skill-badge,
+.priority-skill-list .skill-badge {
+    padding: 8px 11px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color:
+        rgba(255,255,255,.78);
+}
+
+.matched-panel .skill-badge {
+    border-color:
+        rgba(16,185,129,.2);
+
+    background:
+        rgba(16,185,129,.07);
+
+    color: #6ee7b7;
+}
+
+.missing-panel .skill-badge {
+    border-color:
+        rgba(255,106,0,.22);
+
+    background:
+        rgba(255,106,0,.07);
+
+    color: #ffab6a;
+}
+
+.skill-empty {
+    font-size: 12px;
+
+    color:
+        rgba(255,255,255,.35);
+}
+
+
+/* =========================================================
+   PRIORITY
+========================================================= */
+
+.priority-skills-panel {
+    margin-top: 16px;
+}
+
+.priority-skill-list .skill-badge {
+    border-color:
+        rgba(255,190,70,.2);
+
+    background:
+        rgba(255,190,70,.06);
+
+    color: #ffd18a;
+}
+
+
+/* =========================================================
+   RECOMMENDATIONS
+========================================================= */
+
+.job-recommendation-panel {
+    margin-top: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,106,0,.07),
+            rgba(255,255,255,.02)
+        );
+}
+
+.job-recommendation-list {
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+.job-recommendation-list li {
+    position: relative;
+
+    padding: 12px 14px 12px 34px;
+
+    margin-bottom: 8px;
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    border-radius: 12px;
+
+    background:
+        rgba(0,0,0,.12);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    color:
+        rgba(255,255,255,.72);
+}
+
+.job-recommendation-list li:last-child {
+    margin-bottom: 0;
+}
+
+.job-recommendation-list li::before {
+    content: "→";
+
+    position: absolute;
+
+    left: 13px;
+
+    top: 11px;
+
+    color: #ff8a2b;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 899px) {
+
+    .job-match-section {
+        padding: 80px 0;
+    }
+
+    .job-match-card {
+        margin-top: 32px;
+
+        padding: 22px;
+
+        border-radius: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .job-match-section {
+        padding: 65px 0;
+    }
+
+    .job-match-card {
+        padding: 17px;
+
+        border-radius: 18px;
+    }
+
+    .job-match-header {
+        align-items: flex-start;
+
+        gap: 18px;
+    }
+
+    .job-match-header h3 {
+        font-size: 24px;
+    }
+
+    .match-score-ring {
+        width: 92px;
+
+        height: 92px;
+
+        flex-basis: 92px;
+    }
+
+    .match-score-value strong {
+        font-size: 24px;
+    }
+
+    .job-match-metrics {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+    }
+
+    .job-match-columns {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .job-skill-panel,
+    .priority-skills-panel,
+    .job-recommendation-panel {
+        padding: 17px;
+
+        border-radius: 16px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .job-match-header {
+        flex-direction: column;
+    }
+
+    .match-score-ring {
+        align-self: flex-start;
+    }
+
+}
