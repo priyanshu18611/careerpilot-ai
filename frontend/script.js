@@ -496,9 +496,15 @@ function displayJobMatch(
 
     if (jobMatchRole) {
 
-        jobMatchRole.textContent =
-            analysis.target_role ||
-            "Technology Role";
+        const roleName =
+    analysis.target_role ||
+    "Technology Role";
+
+jobMatchRole.textContent =
+    roleName.replace(
+        /\b\w/g,
+        (letter) => letter.toUpperCase()
+    );
 
     }
 
