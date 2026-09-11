@@ -75,7 +75,51 @@ class ResumeAnalysisResponse(BaseModel):
 
     analysis: AnalysisResponse
 
+class JobMatchResponse(BaseModel):
 
+    status: str
+
+    filename: str
+
+    target_role: str
+
+    match_score: int = Field(
+        ge=0,
+        le=100
+    )
+
+    match_level: str
+
+    skill_match_score: int = Field(
+        ge=0,
+        le=100
+    )
+
+    keyword_overlap_score: int = Field(
+        ge=0,
+        le=100
+    )
+
+    role_fit_score: int = Field(
+        ge=0,
+        le=100
+    )
+
+    matched_skills: list[str] = Field(
+        default_factory=list
+    )
+
+    missing_skills: list[str] = Field(
+        default_factory=list
+    )
+
+    priority_skills: list[str] = Field(
+        default_factory=list
+    )
+
+    recommendations: list[str] = Field(
+        default_factory=list
+    )
 # =========================================
 # FASTAPI APPLICATION
 # =========================================
