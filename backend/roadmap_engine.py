@@ -386,9 +386,10 @@ def get_skill_roadmap(
     normalized = normalize_skill(skill)
 
     roadmap = SKILL_ROADMAPS.get(
-            normalized
-        )
- if roadmap:
+        normalized
+    )
+
+    if roadmap:
 
         return {
             "skill": skill,
@@ -446,7 +447,6 @@ def generate_learning_roadmap(
             )
         }
 
-
     roadmaps = []
 
     for skill in missing_skills[:8]:
@@ -454,7 +454,6 @@ def generate_learning_roadmap(
         roadmaps.append(
             get_skill_roadmap(skill)
         )
-
 
     roadmaps.sort(
         key=lambda item: (
@@ -465,22 +464,18 @@ def generate_learning_roadmap(
         )
     )
 
-
     total_weeks = sum(
         item["weeks"]
         for item in roadmaps
     )
 
-
     phases = build_phases(
         roadmaps
     )
 
-
     readiness = calculate_readiness(
         len(roadmaps)
     )
-
 
     return {
         "target_role": target_role,
@@ -560,7 +555,6 @@ def build_phases(
             - 1
         )
 
-
         phases.append({
 
             "phase": index + 1,
@@ -586,11 +580,9 @@ def build_phases(
 
         })
 
-
         current_week = (
             end_week + 1
         )
-
 
     return phases
 
@@ -609,18 +601,15 @@ def generate_90_day_plan(
         target_role
     )
 
-
     skill_gaps = roadmap[
         "skill_gaps"
     ]
-
 
     first_30 = skill_gaps[:3]
 
     second_30 = skill_gaps[3:6]
 
     final_30 = skill_gaps[6:8]
-
 
     return {
 
@@ -691,12 +680,10 @@ def create_career_roadmap(
         target_role
     )
 
-
     ninety_day_plan = generate_90_day_plan(
         missing_skills,
         target_role
     )
-
 
     return {
         **roadmap,
