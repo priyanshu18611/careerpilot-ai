@@ -722,7 +722,295 @@ Data Analytics"
                 class="analysis-result"
                 hidden
             >
+<!-- =====================================================
+     CAREERPILOT AI — JOB MATCH DASHBOARD
+===================================================== -->
 
+<section
+    class="job-match-section"
+    id="job-match"
+>
+
+    <div class="section-heading">
+
+        <span class="section-kicker">
+            CAREER INTELLIGENCE
+        </span>
+
+        <h2>
+            Job Match
+            <span>Engine</span>
+        </h2>
+
+        <p>
+            Discover how closely your resume matches
+            a target role and identify the skills
+            you should improve.
+        </p>
+
+    </div>
+
+
+    <div class="job-match-card">
+
+        <!-- HEADER -->
+
+        <div class="job-match-header">
+
+            <div>
+
+                <span class="match-label">
+                    TARGET ROLE
+                </span>
+
+                <h3 id="jobMatchRole">
+                    Technology Role
+                </h3>
+
+            </div>
+
+
+            <div class="match-score-ring">
+
+                <div class="match-score-value">
+
+                    <strong id="jobMatchScore">
+                        --
+                    </strong>
+
+                    <span>
+                        MATCH
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MATCH LEVEL -->
+
+        <div
+            class="job-match-level"
+            id="jobMatchLevel"
+        >
+            Waiting for analysis
+        </div>
+
+
+        <!-- SCORE GRID -->
+
+        <div class="job-match-metrics">
+
+            <div class="match-metric">
+
+                <span>
+                    Skill Match
+                </span>
+
+                <strong id="jobSkillMatch">
+                    --/100
+                </strong>
+
+            </div>
+
+
+            <div class="match-metric">
+
+                <span>
+                    Keyword Match
+                </span>
+
+                <strong id="jobKeywordMatch">
+                    --/100
+                </strong>
+
+            </div>
+
+
+            <div class="match-metric">
+
+                <span>
+                    Role Fit
+                </span>
+
+                <strong id="jobRoleFit">
+                    --/100
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- SKILL COLUMNS -->
+
+        <div class="job-match-columns">
+
+
+            <!-- MATCHED -->
+
+            <div class="job-skill-panel matched-panel">
+
+                <div class="panel-title">
+
+                    <span class="panel-icon">
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Matched Skills
+                        </strong>
+
+                        <small>
+                            Skills already found
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="job-skill-list"
+                    id="jobMatchedSkills"
+                >
+
+                    <span class="skill-empty">
+                        Run Job Match to see skills.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MISSING -->
+
+            <div class="job-skill-panel missing-panel">
+
+                <div class="panel-title">
+
+                    <span class="panel-icon">
+                        !
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Missing Skills
+                        </strong>
+
+                        <small>
+                            Skills to improve
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="job-skill-list"
+                    id="jobMissingSkills"
+                >
+
+                    <span class="skill-empty">
+                        Run Job Match to see gaps.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRIORITY SKILLS -->
+
+        <div class="priority-skills-panel">
+
+            <div class="panel-title">
+
+                <span class="panel-icon">
+                    ★
+                </span>
+
+                <div>
+
+                    <strong>
+                        Priority Skills
+                    </strong>
+
+                    <small>
+                        Focus on these first
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="priority-skill-list"
+                id="jobPrioritySkills"
+            >
+
+                <span class="skill-empty">
+                    Priority skills will appear here.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOMMENDATIONS -->
+
+        <div class="job-recommendation-panel">
+
+            <div class="panel-title">
+
+                <span class="panel-icon">
+                    ✦
+                </span>
+
+                <div>
+
+                    <strong>
+                        CareerPilot Recommendation
+                    </strong>
+
+                    <small>
+                        Personalized job-match insights
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <ul
+                id="jobRecommendations"
+                class="job-recommendation-list"
+            >
+
+                <li>
+                    Upload a resume and enter a target
+                    job description to generate
+                    recommendations.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
 
                 <div class="result-header">
 
