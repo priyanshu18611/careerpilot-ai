@@ -383,15 +383,12 @@ def get_skill_roadmap(
     skill: str
 ) -> dict:
 
-    normalized =
-        normalize_skill(skill)
+    normalized = normalize_skill(skill)
 
-    roadmap =
-        SKILL_ROADMAPS.get(
+    roadmap = SKILL_ROADMAPS.get(
             normalized
         )
-
-    if roadmap:
+ if roadmap:
 
         return {
             "skill": skill,
