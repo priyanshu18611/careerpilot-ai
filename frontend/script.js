@@ -300,7 +300,58 @@ const jobRecommendations =
 
 const jobMatchSection =
     document.getElementById("job-match");
+    
+const runJobMatchBtn =
+    document.getElementById("runJobMatchBtn");
 
+
+if (runJobMatchBtn) {
+
+    runJobMatchBtn.addEventListener(
+        "click",
+        async () => {
+
+            if (
+                !resumeInput ||
+                !resumeInput.files.length
+            ) {
+
+                alert(
+                    "Please choose your resume first."
+                );
+
+                return;
+            }
+
+
+            const file =
+                resumeInput.files[0];
+
+
+            runJobMatchBtn.disabled =
+                true;
+
+
+            runJobMatchBtn.innerHTML =
+                "⏳ Matching Job...";
+
+
+            await runJobMatch(
+                file
+            );
+
+
+            runJobMatchBtn.disabled =
+                false;
+
+
+            runJobMatchBtn.innerHTML =
+                "<span>✦</span> Run Job Match";
+
+        }
+    );
+
+}
 
 function showJobMatch() {
 
