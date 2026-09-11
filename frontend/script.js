@@ -259,7 +259,359 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
+/* =====================================================
+   JOB MATCH ENGINE
+===================================================== */
 
+const jobMatchRole =
+    document.getElementById("jobMatchRole");
+
+const jobMatchScore =
+    document.getElementById("jobMatchScore");
+
+const jobMatchLevel =
+    document.getElementById("jobMatchLevel");
+
+const jobSkillMatch =
+    document.getElementById("jobSkillMatch");
+
+const jobKeywordMatch =
+    document.getElementById("jobKeywordMatch");
+
+const jobRoleFit =
+    document.getElementById("jobRoleFit");
+
+const jobMatchedSkills =
+    document.getElementById("jobMatchedSkills");
+
+const jobMissingSkills =
+    document.getElementById("jobMissingSkills");
+
+const jobPrioritySkills =
+    document.getElementById("jobPrioritySkills");
+
+const jobRecommendations =
+    document.getElementById("jobRecommendations");
+
+
+/* =====================================================
+   JOB MATCH BUTTON
+===================================================== */
+
+const jobMatchSection =
+    document.getElementById("job-match");
+
+
+function showJobMatch() {
+
+    if (!jobMatchSection) {
+        return;
+    }
+
+    jobMatchSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+/* =====================================================
+   RENDER JOB MATCH SKILLS
+===================================================== */
+
+function renderJobMatchSkills(
+    container,
+    skills,
+    emptyMessage
+) {
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (!skills || !skills.length) {
+
+        const empty =
+            document.createElement("span");
+
+        empty.className =
+            "skill-empty";
+
+        empty.textContent =
+            emptyMessage;
+
+        container.appendChild(
+            empty
+        );
+
+        return;
+    }
+
+
+    skills.forEach(
+        (skill) => {
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                "skill-badge";
+
+            badge.textContent =
+                skill;
+
+            container.appendChild(
+                badge
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER JOB RECOMMENDATIONS
+===================================================== */
+
+function renderJobRecommendations(
+    recommendations
+) {
+
+    if (!jobRecommendations) {
+        return;
+    }
+
+
+    jobRecommendations.innerHTML =
+        "";
+
+
+    if (
+        !recommendations ||
+        !recommendations.length
+    ) {
+
+        const item =
+            document.createElement("li");
+
+        item.textContent =
+            "No additional recommendations available.";
+
+        jobRecommendations.appendChild(
+            item
+        );
+
+        return;
+    }
+
+
+    recommendations.forEach(
+        (recommendation) => {
+
+            const item =
+                document.createElement("li");
+
+            item.textContent =
+                recommendation;
+
+            jobRecommendations.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   DISPLAY JOB MATCH
+===================================================== */
+
+function displayJobMatch(
+    analysis
+) {
+
+    if (!analysis) {
+        return;
+    }
+
+
+    if (jobMatchRole) {
+
+        jobMatchRole.textContent =
+            analysis.target_role ||
+            "Technology Role";
+
+    }
+
+
+    if (jobMatchScore) {
+
+        jobMatchScore.textContent =
+            analysis.match_score ?? "--";
+
+    }
+
+
+    if (jobMatchLevel) {
+
+        jobMatchLevel.textContent =
+            analysis.match_level ||
+            "Match calculated";
+
+    }
+
+
+    if (jobSkillMatch) {
+
+        jobSkillMatch.textContent =
+            `${analysis.skill_match_score ?? 0}/100`;
+
+    }
+
+
+    if (jobKeywordMatch) {
+
+        jobKeywordMatch.textContent =
+            `${analysis.keyword_overlap_score ?? 0}/100`;
+
+    }
+
+
+    if (jobRoleFit) {
+
+        jobRoleFit.textContent =
+            `${analysis.role_fit_score ?? 0}/100`;
+
+    }
+
+
+    renderJobMatchSkills(
+        jobMatchedSkills,
+        analysis.matched_skills || [],
+        "No matching skills found."
+    );
+
+
+    renderJobMatchSkills(
+        jobMissingSkills,
+        analysis.missing_skills || [],
+        "No major skill gaps detected."
+    );
+
+
+    renderJobMatchSkills(
+        jobPrioritySkills,
+        analysis.priority_skills || [],
+        "No priority skills detected."
+    );
+
+
+    renderJobRecommendations(
+        analysis.recommendations || []
+    );
+
+
+    showJobMatch();
+
+}
+
+
+/* =====================================================
+   RUN JOB MATCH
+===================================================== */
+
+async function runJobMatch(
+    file
+) {
+
+    if (!file) {
+        return;
+    }
+
+
+    if (
+        !jobDescription ||
+        !jobDescription.value.trim()
+    ) {
+
+        alert(
+            "Please enter a target job description before running Job Match."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "file",
+            file
+        );
+
+
+        formData.append(
+            "job_description",
+            jobDescription.value.trim()
+        );
+
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/job-match`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Job matching failed."
+            );
+
+        }
+
+
+        displayJobMatch(
+            data
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "CareerPilot AI Job Match Error:",
+            error
+        );
+
+
+        alert(
+            "Unable to run Job Match right now. Please try again."
+        );
+
+    }
+
+}
 
     /* =====================================================
        RESUME UPLOAD
