@@ -457,7 +457,13 @@ async def analyze_resume(
 
 
         await file.close()
-        @app.post(
+
+
+# =========================================
+# JOB MATCHER
+# =========================================
+
+@app.post(
     "/api/job-match",
     response_model=JobMatchResponse,
     tags=["Job Intelligence"],
@@ -523,7 +529,7 @@ async def job_match(
         )
 
 
-        unique_filename = (
+    unique_filename = (
         f"{uuid.uuid4().hex}{extension}"
     )
     
@@ -531,7 +537,6 @@ async def job_match(
         UPLOAD_DIR
         / unique_filename
     )
-    
 
 
     total_size = 0
