@@ -4305,3 +4305,571 @@ textarea:focus-visible {
 .job-match-btn span {
     font-size: 15px;
 }
+/* =========================================================
+   CAREERPILOT AI — CAREER ROADMAP
+   PREMIUM UI
+   ========================================================= */
+
+.roadmap-section {
+    width: 100%;
+    margin-top: 80px;
+    padding: 80px 0;
+}
+
+.roadmap-section .section-heading {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.roadmap-section .section-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #ff7a18;
+}
+
+.roadmap-section .section-heading h2 {
+    margin: 0;
+    font-size: clamp(30px, 5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.roadmap-section .section-heading h2 span {
+    color: #ff6a00;
+}
+
+.roadmap-section .section-heading p {
+    max-width: 650px;
+    margin: 16px auto 0;
+    color: rgba(255,255,255,.62);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ACTION CARD
+   ========================================================= */
+
+.roadmap-action-card {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border: 1px solid rgba(255,106,0,.20);
+    border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,106,0,.10),
+            rgba(255,255,255,.025)
+        );
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+}
+
+.roadmap-action-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.roadmap-icon {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: linear-gradient(135deg,#ff6a00,#ff9a3d);
+    color: #fff;
+    font-size: 22px;
+    box-shadow: 0 12px 30px rgba(255,106,0,.20);
+}
+
+.roadmap-action-content h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+}
+
+.roadmap-action-content p {
+    margin: 0;
+    max-width: 620px;
+    color: rgba(255,255,255,.58);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.generate-roadmap-btn {
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#ff6a00,#ff8a2b);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 12px 30px rgba(255,106,0,.18);
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+}
+
+.generate-roadmap-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(255,106,0,.26);
+}
+
+.generate-roadmap-btn:disabled {
+    opacity: .65;
+    cursor: wait;
+    transform: none;
+}
+
+
+/* =========================================================
+   ROADMAP RESULT
+   ========================================================= */
+
+.roadmap-result {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.roadmap-result[hidden] {
+    display: none;
+}
+
+.roadmap-result-header {
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    background: rgba(255,255,255,.025);
+}
+
+.roadmap-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ff7a18;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.roadmap-result-header h3 {
+    margin: 0;
+    font-size: clamp(24px,4vw,38px);
+    letter-spacing: -.03em;
+}
+
+.roadmap-result-header p {
+    max-width: 680px;
+    margin: 10px 0 0;
+    color: rgba(255,255,255,.58);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.roadmap-readiness {
+    min-width: 120px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid rgba(255,106,0,.20);
+    border-radius: 16px;
+    background: rgba(255,106,0,.06);
+}
+
+.roadmap-readiness span {
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(255,255,255,.48);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.roadmap-readiness strong {
+    color: #ff7a18;
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.roadmap-stats {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+}
+
+.roadmap-stat-card {
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    background: rgba(255,255,255,.025);
+}
+
+.roadmap-stat-card span {
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(255,255,255,.45);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .13em;
+}
+
+.roadmap-stat-card strong {
+    font-size: 26px;
+    letter-spacing: -.03em;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.roadmap-90-section,
+.roadmap-gaps-section,
+.roadmap-phases-section {
+    margin-top: 38px;
+}
+
+.roadmap-section-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.roadmap-section-title > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 9px;
+    background: rgba(255,106,0,.10);
+    color: #ff7a18;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.roadmap-section-title h4 {
+    margin: 0 0 4px;
+    font-size: 18px;
+}
+
+.roadmap-section-title p {
+    margin: 0;
+    color: rgba(255,255,255,.48);
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   30 / 60 / 90 CARDS
+   ========================================================= */
+
+.roadmap-day-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+}
+
+.roadmap-day-card {
+    position: relative;
+    min-height: 230px;
+    padding: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.012)
+        );
+}
+
+.roadmap-day-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,#ff6a00,transparent);
+}
+
+.roadmap-day-number {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    color: rgba(255,255,255,.06);
+    font-size: 48px;
+    font-weight: 900;
+}
+
+.roadmap-day-period {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #ff7a18;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .13em;
+}
+
+.roadmap-day-card h4 {
+    position: relative;
+    margin: 0 0 9px;
+    font-size: 19px;
+}
+
+.roadmap-day-card p {
+    position: relative;
+    margin: 0 0 18px;
+    color: rgba(255,255,255,.53);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.roadmap-skill-list {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.roadmap-skill-list span {
+    padding: 6px 9px;
+    border: 1px solid rgba(255,106,0,.16);
+    border-radius: 8px;
+    background: rgba(255,106,0,.05);
+    color: rgba(255,255,255,.72);
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SKILL GAP CARDS
+   ========================================================= */
+
+.roadmap-skill-gap-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 14px;
+}
+
+.roadmap-skill-card {
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    background: rgba(255,255,255,.025);
+}
+
+.roadmap-skill-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.roadmap-skill-card h5 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.roadmap-priority {
+    padding: 5px 9px;
+    border-radius: 7px;
+    background: rgba(255,106,0,.10);
+    color: #ff8a2b;
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.roadmap-skill-weeks {
+    margin-top: 8px;
+    color: rgba(255,255,255,.42);
+    font-size: 11px;
+}
+
+.roadmap-skill-topics {
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.roadmap-skill-topics li {
+    position: relative;
+    margin-bottom: 8px;
+    padding-left: 16px;
+    color: rgba(255,255,255,.60);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.roadmap-skill-topics li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #ff7a18;
+}
+
+.roadmap-project {
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,106,0,.045);
+    color: rgba(255,255,255,.60);
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.roadmap-project strong {
+    color: #ff8a2b;
+}
+
+
+/* =========================================================
+   PHASES
+   ========================================================= */
+
+.roadmap-phase-list {
+    display: grid;
+    gap: 12px;
+}
+
+.roadmap-phase-card {
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 15px;
+    background: rgba(255,255,255,.025);
+}
+
+.roadmap-phase-number {
+    color: #ff7a18;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.roadmap-phase-card h5 {
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+
+.roadmap-phase-card p {
+    margin: 0;
+    color: rgba(255,255,255,.45);
+    font-size: 11px;
+}
+
+.roadmap-phase-weeks {
+    color: rgba(255,255,255,.55);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.roadmap-empty-state {
+    grid-column: 1 / -1;
+    padding: 30px;
+    text-align: center;
+    border: 1px dashed rgba(255,255,255,.10);
+    border-radius: 16px;
+}
+
+.roadmap-empty-state span {
+    display: block;
+    margin-bottom: 8px;
+    color: #ff7a18;
+    font-size: 20px;
+}
+
+.roadmap-empty-state p {
+    margin: 0;
+    color: rgba(255,255,255,.42);
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 899px) {
+
+    .roadmap-section {
+        margin-top: 50px;
+        padding: 55px 0;
+    }
+
+    .roadmap-action-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+    }
+
+    .roadmap-action-content {
+        align-items: flex-start;
+    }
+
+    .generate-roadmap-btn {
+        width: 100%;
+    }
+
+    .roadmap-result-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .roadmap-readiness {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .roadmap-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .roadmap-day-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .roadmap-skill-gap-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .roadmap-phase-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .roadmap-phase-weeks {
+        white-space: normal;
+    }
+}
