@@ -1179,5 +1179,885 @@ async function runJobMatch(
         }
     );
 
+    /* =====================================================
+       CAREERPILOT AI — CAREER ROADMAP ENGINE
+    ===================================================== */
 
+    const generateRoadmapBtn =
+        document.getElementById(
+            "generateRoadmapBtn"
+        );
+
+    const roadmapResult =
+        document.getElementById(
+            "roadmapResult"
+        );
+
+    const roadmapTargetRole =
+        document.getElementById(
+            "roadmapTargetRole"
+        );
+
+    const roadmapReadiness =
+        document.getElementById(
+            "roadmapReadiness"
+        );
+
+    const roadmapMessage =
+        document.getElementById(
+            "roadmapMessage"
+        );
+
+    const roadmapSkillGapCount =
+        document.getElementById(
+            "roadmapSkillGapCount"
+        );
+
+    const roadmapTotalWeeks =
+        document.getElementById(
+            "roadmapTotalWeeks"
+        );
+
+    const roadmap30Title =
+        document.getElementById(
+            "roadmap30Title"
+        );
+
+    const roadmap30Goal =
+        document.getElementById(
+            "roadmap30Goal"
+        );
+
+    const roadmap30Skills =
+        document.getElementById(
+            "roadmap30Skills"
+        );
+
+    const roadmap60Title =
+        document.getElementById(
+            "roadmap60Title"
+        );
+
+    const roadmap60Goal =
+        document.getElementById(
+            "roadmap60Goal"
+        );
+
+    const roadmap60Skills =
+        document.getElementById(
+            "roadmap60Skills"
+        );
+
+    const roadmap90Title =
+        document.getElementById(
+            "roadmap90Title"
+        );
+
+    const roadmap90Goal =
+        document.getElementById(
+            "roadmap90Goal"
+        );
+
+    const roadmap90Skills =
+        document.getElementById(
+            "roadmap90Skills"
+        );
+
+    const roadmapSkillGaps =
+        document.getElementById(
+            "roadmapSkillGaps"
+        );
+
+    const roadmapPhases =
+        document.getElementById(
+            "roadmapPhases"
+        );
+
+
+    /* =====================================================
+       ROADMAP SKILL BADGES
+    ===================================================== */
+
+    function renderRoadmapSkills(
+        container,
+        skills
+    ) {
+
+        if (!container) {
+            return;
+        }
+
+        container.innerHTML = "";
+
+        if (
+            !skills ||
+            !skills.length
+        ) {
+
+            const badge =
+                document.createElement(
+                    "span"
+                );
+
+            badge.textContent =
+                "No specific skills";
+
+            container.appendChild(
+                badge
+            );
+
+            return;
+        }
+
+        skills.forEach(
+            (skill) => {
+
+                const badge =
+                    document.createElement(
+                        "span"
+                    );
+
+                badge.textContent =
+                    skill;
+
+                container.appendChild(
+                    badge
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ROADMAP SKILL GAP CARDS
+    ===================================================== */
+
+    function renderRoadmapSkillGaps(
+        gaps
+    ) {
+
+        if (!roadmapSkillGaps) {
+            return;
+        }
+
+        roadmapSkillGaps.innerHTML = "";
+
+        if (
+            !gaps ||
+            !gaps.length
+        ) {
+
+            roadmapSkillGaps.innerHTML = `
+                <div class="roadmap-empty-state">
+                    <span>✓</span>
+                    <p>
+                        No major skill gaps detected.
+                        Keep strengthening your existing skills.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        gaps.forEach(
+            (gap) => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "roadmap-skill-card";
+
+                const topics =
+                    Array.isArray(
+                        gap.topics
+                    )
+                        ? gap.topics
+                        : [];
+
+                card.innerHTML = `
+                    <div class="roadmap-skill-card-top">
+
+                        <h5>
+                            ${escapeRoadmapHTML(
+                                gap.skill ||
+                                "Skill"
+                            )}
+                        </h5>
+
+                        <span class="roadmap-priority">
+                            ${escapeRoadmapHTML(
+                                gap.priority ||
+                                "Medium"
+                            )}
+                        </span>
+
+                    </div>
+
+                    <div class="roadmap-skill-weeks">
+                        ${Number(
+                            gap.weeks || 0
+                        )} week(s)
+                    </div>
+
+                    <ul class="roadmap-skill-topics">
+
+                        ${topics.map(
+                            (topic) => `
+                                <li>
+                                    ${escapeRoadmapHTML(
+                                        topic
+                                    )}
+                                </li>
+                            `
+                        ).join("")}
+
+                    </ul>
+
+                    <div class="roadmap-project">
+
+                        <strong>
+                            Project:
+                        </strong>
+
+                        ${escapeRoadmapHTML(
+                            gap.project ||
+                            "Build a practical project."
+                        )}
+
+                    </div>
+                `;
+
+                roadmapSkillGaps.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ROADMAP PHASES
+    ===================================================== */
+
+    function renderRoadmapPhases(
+        phases
+    ) {
+
+        if (!roadmapPhases) {
+            return;
+        }
+
+        roadmapPhases.innerHTML = "";
+
+        if (
+            !phases ||
+            !phases.length
+        ) {
+
+            roadmapPhases.innerHTML = `
+                <div class="roadmap-empty-state">
+                    <span>✦</span>
+                    <p>
+                        No learning phases available.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        phases.forEach(
+            (phase, index) => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "roadmap-phase-card";
+
+                const topics =
+                    Array.isArray(
+                        phase.topics
+                    )
+                        ? phase.topics
+                        : [];
+
+                card.innerHTML = `
+
+                    <div class="roadmap-phase-number">
+                        PHASE ${String(
+                            phase.phase ||
+                            index + 1
+                        ).padStart(2, "0")}
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            ${escapeRoadmapHTML(
+                                phase.title ||
+                                "Learning Phase"
+                            )}
+                        </h5>
+
+                        <p>
+                            ${
+                                topics
+                                    .slice(0, 3)
+                                    .map(
+                                        escapeRoadmapHTML
+                                    )
+                                    .join(" • ")
+                            }
+                        </p>
+
+                    </div>
+
+                    <div class="roadmap-phase-weeks">
+                        ${escapeRoadmapHTML(
+                            phase.weeks ||
+                            "Ongoing"
+                        )}
+                    </div>
+
+                `;
+
+                roadmapPhases.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SAFE HTML TEXT
+    ===================================================== */
+
+    function escapeRoadmapHTML(
+        value
+    ) {
+
+        const text =
+            String(
+                value ?? ""
+            );
+
+        return text
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       DISPLAY ROADMAP
+    ===================================================== */
+
+    function displayCareerRoadmap(
+        response
+    ) {
+
+        if (!response) {
+            return;
+        }
+
+        const roadmap =
+            response.roadmap ||
+            response;
+
+        const ninety =
+            roadmap.ninety_day_plan ||
+            {};
+
+        const day30 =
+            ninety.day_0_30 ||
+            {};
+
+        const day60 =
+            ninety.day_31_60 ||
+            {};
+
+        const day90 =
+            ninety.day_61_90 ||
+            {};
+
+        const gaps =
+            roadmap.skill_gaps ||
+            [];
+
+        const phases =
+            roadmap.phases ||
+            [];
+
+
+        if (roadmapTargetRole) {
+
+            roadmapTargetRole.textContent =
+                roadmap.target_role ||
+                "Technology Role";
+
+        }
+
+
+        if (roadmapReadiness) {
+
+            roadmapReadiness.textContent =
+                roadmap.readiness ||
+                "--";
+
+        }
+
+
+        if (roadmapMessage) {
+
+            roadmapMessage.textContent =
+                roadmap.message ||
+                "Your personalized career roadmap is ready.";
+
+        }
+
+
+        if (roadmapSkillGapCount) {
+
+            roadmapSkillGapCount.textContent =
+                gaps.length;
+
+        }
+
+
+        if (roadmapTotalWeeks) {
+
+            roadmapTotalWeeks.textContent =
+                roadmap.total_weeks ??
+                0;
+
+        }
+
+
+        if (roadmap30Title) {
+
+            roadmap30Title.textContent =
+                day30.title ||
+                "Foundation";
+
+        }
+
+
+        if (roadmap30Goal) {
+
+            roadmap30Goal.textContent =
+                day30.goal ||
+                "Build strong fundamentals.";
+
+        }
+
+
+        if (roadmap60Title) {
+
+            roadmap60Title.textContent =
+                day60.title ||
+                "Application";
+
+        }
+
+
+        if (roadmap60Goal) {
+
+            roadmap60Goal.textContent =
+                day60.goal ||
+                "Apply skills through projects.";
+
+        }
+
+
+        if (roadmap90Title) {
+
+            roadmap90Title.textContent =
+                day90.title ||
+                "Job Readiness";
+
+        }
+
+
+        if (roadmap90Goal) {
+
+            roadmap90Goal.textContent =
+                day90.goal ||
+                "Prepare for interviews.";
+
+        }
+
+
+        renderRoadmapSkills(
+            roadmap30Skills,
+            day30.skills || []
+        );
+
+        renderRoadmapSkills(
+            roadmap60Skills,
+            day60.skills || []
+        );
+
+        renderRoadmapSkills(
+            roadmap90Skills,
+            day90.skills || []
+        );
+
+        renderRoadmapSkillGaps(
+            gaps
+        );
+
+        renderRoadmapPhases(
+            phases
+        );
+
+
+        if (roadmapResult) {
+
+            roadmapResult.hidden =
+                false;
+
+            setTimeout(
+                () => {
+
+                    roadmapResult.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                },
+                100
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SAMPLE ROADMAP
+       ===================================================== */
+
+    const sampleCareerRoadmap = {
+
+        target_role:
+            "Software Engineer",
+
+        readiness:
+            "Moderate",
+
+        total_weeks:
+            7,
+
+        message:
+            "Demo roadmap: focus on high-priority skills to improve Software Engineer readiness.",
+
+        skill_gaps: [
+
+            {
+                skill: "Docker",
+                priority: "High",
+                weeks: 2,
+                topics: [
+                    "Containers and images",
+                    "Dockerfile",
+                    "Docker Compose",
+                    "Environment configuration"
+                ],
+                project:
+                    "Containerize a full-stack application."
+            },
+
+            {
+                skill: "AWS",
+                priority: "High",
+                weeks: 3,
+                topics: [
+                    "AWS fundamentals",
+                    "IAM",
+                    "EC2",
+                    "S3 and deployment"
+                ],
+                project:
+                    "Deploy a web application on AWS."
+            },
+
+            {
+                skill: "Data Structures",
+                priority: "High",
+                weeks: 2,
+                topics: [
+                    "Arrays and strings",
+                    "Linked lists",
+                    "Stacks and queues",
+                    "Trees and hash tables"
+                ],
+                project:
+                    "Solve an interview-focused DSA problem set."
+            }
+
+        ],
+
+        phases: [
+
+            {
+                phase: 1,
+                title:
+                    "Master Docker",
+                weeks:
+                    "Weeks 1-2",
+                topics: [
+                    "Containers",
+                    "Dockerfile",
+                    "Docker Compose"
+                ]
+            },
+
+            {
+                phase: 2,
+                title:
+                    "Master AWS",
+                weeks:
+                    "Weeks 3-5",
+                topics: [
+                    "IAM",
+                    "EC2",
+                    "S3"
+                ]
+            },
+
+            {
+                phase: 3,
+                title:
+                    "Strengthen DSA",
+                weeks:
+                    "Weeks 6-7",
+                topics: [
+                    "Arrays",
+                    "Trees",
+                    "Algorithms"
+                ]
+            }
+
+        ],
+
+        ninety_day_plan: {
+
+            day_0_30: {
+
+                title:
+                    "Foundation",
+
+                skills: [
+                    "Docker",
+                    "AWS"
+                ],
+
+                goal:
+                    "Build strong fundamentals for the highest-priority skill gaps."
+
+            },
+
+            day_31_60: {
+
+                title:
+                    "Application",
+
+                skills: [
+                    "Data Structures"
+                ],
+
+                goal:
+                    "Apply new skills through practical projects and problem solving."
+
+            },
+
+            day_61_90: {
+
+                title:
+                    "Job Readiness",
+
+                skills: [
+                    "Docker",
+                    "AWS",
+                    "Data Structures"
+                ],
+
+                goal:
+                    "Build portfolio evidence, practice interviews and prepare to apply."
+
+            }
+
+        }
+
+    };
+
+
+    /* =====================================================
+       SHOW SAMPLE ON LOAD
+    ===================================================== */
+
+    displayCareerRoadmap(
+        sampleCareerRoadmap
+    );
+
+
+    /* =====================================================
+       GENERATE REAL CAREER ROADMAP
+    ===================================================== */
+
+    if (generateRoadmapBtn) {
+
+        generateRoadmapBtn.addEventListener(
+            "click",
+            async () => {
+
+                if (
+                    !resumeInput ||
+                    !resumeInput.files.length
+                ) {
+
+                    alert(
+                        "Please choose your resume first."
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    !jobDescription ||
+                    !jobDescription.value.trim()
+                ) {
+
+                    alert(
+                        "Please enter a target job description first."
+                    );
+
+                    return;
+
+                }
+
+
+                const file =
+                    resumeInput.files[0];
+
+
+                generateRoadmapBtn.disabled =
+                    true;
+
+                generateRoadmapBtn.innerHTML =
+                    "⏳ Building Roadmap...";
+
+
+                try {
+
+                    const formData =
+                        new FormData();
+
+                    formData.append(
+                        "file",
+                        file
+                    );
+
+                    formData.append(
+                        "job_description",
+                        jobDescription.value.trim()
+                    );
+
+
+                    const response =
+                        await fetch(
+                            `${API_BASE_URL}/api/career-roadmap`,
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.detail ||
+                            "Career roadmap generation failed."
+                        );
+
+                    }
+
+
+                    displayCareerRoadmap(
+                        data
+                    );
+
+
+                    generateRoadmapBtn.innerHTML =
+                        "✓ Roadmap Generated";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "CareerPilot AI Roadmap Error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Unable to generate the career roadmap right now. Please try again."
+                    );
+
+
+                    generateRoadmapBtn.innerHTML =
+                        "<span>✦</span> Generate Career Roadmap";
+
+                } finally {
+
+                    generateRoadmapBtn.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+    }
 });
