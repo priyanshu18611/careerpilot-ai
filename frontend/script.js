@@ -2060,4 +2060,1089 @@ async function runJobMatch(
         );
 
     }
+   /* =========================================================
+   CAREERPILOT AI — RESUME BUILDER FUNCTIONALITY
+   ========================================================= */
+
+const cpResumeBuilder = {
+
+    fields: {
+        name: document.getElementById("builderName"),
+        title: document.getElementById("builderTitle"),
+        email: document.getElementById("builderEmail"),
+        phone: document.getElementById("builderPhone"),
+        location: document.getElementById("builderLocation"),
+
+        github: document.getElementById("builderGithub"),
+        linkedin: document.getElementById("builderLinkedin"),
+        portfolio: document.getElementById("builderPortfolio"),
+
+        summary: document.getElementById("builderSummary"),
+        skills: document.getElementById("builderSkills"),
+
+        degree: document.getElementById("builderDegree"),
+        college: document.getElementById("builderCollege"),
+        educationYear: document.getElementById(
+            "builderEducationYear"
+        ),
+
+        experienceRole: document.getElementById(
+            "builderExperienceRole"
+        ),
+        experienceCompany: document.getElementById(
+            "builderExperienceCompany"
+        ),
+        experienceDuration: document.getElementById(
+            "builderExperienceDuration"
+        ),
+        experienceDescription: document.getElementById(
+            "builderExperienceDescription"
+        ),
+
+        projectName: document.getElementById(
+            "builderProjectName"
+        ),
+        projectTech: document.getElementById(
+            "builderProjectTech"
+        ),
+        projectDescription: document.getElementById(
+            "builderProjectDescription"
+        ),
+        projectLink: document.getElementById(
+            "builderProjectLink"
+        ),
+
+        certification: document.getElementById(
+            "builderCertification"
+        ),
+        certificationIssuer: document.getElementById(
+            "builderCertificationIssuer"
+        )
+    },
+
+    preview: document.getElementById(
+        "resumeBuilderPreview"
+    ),
+
+    sampleButton: document.getElementById(
+        "loadSampleResumeBtn"
+    ),
+
+    buildButton: document.getElementById(
+        "buildResumeBtn"
+    ),
+
+    getValue(field) {
+        return field?.value?.trim() || "";
+    },
+
+    escapeHTML(value) {
+
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    },
+
+    escapeURL(value) {
+
+        return String(value || "")
+            .replace(/"/g, "%22")
+            .replace(/</g, "%3C")
+            .replace(/>/g, "%3E");
+    },
+
+    getData() {
+
+        return {
+
+            name: this.getValue(this.fields.name),
+
+            title: this.getValue(
+                this.fields.title
+            ),
+
+            email: this.getValue(
+                this.fields.email
+            ),
+
+            phone: this.getValue(
+                this.fields.phone
+            ),
+
+            location: this.getValue(
+                this.fields.location
+            ),
+
+            github: this.getValue(
+                this.fields.github
+            ),
+
+            linkedin: this.getValue(
+                this.fields.linkedin
+            ),
+
+            portfolio: this.getValue(
+                this.fields.portfolio
+            ),
+
+            summary: this.getValue(
+                this.fields.summary
+            ),
+
+            skills: this.getValue(
+                this.fields.skills
+            ),
+
+            degree: this.getValue(
+                this.fields.degree
+            ),
+
+            college: this.getValue(
+                this.fields.college
+            ),
+
+            educationYear: this.getValue(
+                this.fields.educationYear
+            ),
+
+            experienceRole: this.getValue(
+                this.fields.experienceRole
+            ),
+
+            experienceCompany: this.getValue(
+                this.fields.experienceCompany
+            ),
+
+            experienceDuration: this.getValue(
+                this.fields.experienceDuration
+            ),
+
+            experienceDescription: this.getValue(
+                this.fields.experienceDescription
+            ),
+
+            projectName: this.getValue(
+                this.fields.projectName
+            ),
+
+            projectTech: this.getValue(
+                this.fields.projectTech
+            ),
+
+            projectDescription: this.getValue(
+                this.fields.projectDescription
+            ),
+
+            projectLink: this.getValue(
+                this.fields.projectLink
+            ),
+
+            certification: this.getValue(
+                this.fields.certification
+            ),
+
+            certificationIssuer: this.getValue(
+                this.fields.certificationIssuer
+            )
+        };
+    },
+
+    renderContact(data) {
+
+        const items = [];
+
+        if (data.email) {
+            items.push(
+                `<span>${this.escapeHTML(
+                    data.email
+                )}</span>`
+            );
+        }
+
+        if (data.phone) {
+            items.push(
+                `<span>${this.escapeHTML(
+                    data.phone
+                )}</span>`
+            );
+        }
+
+        if (data.location) {
+            items.push(
+                `<span>${this.escapeHTML(
+                    data.location
+                )}</span>`
+            );
+        }
+
+        if (data.github) {
+            items.push(
+                `<a href="${this.escapeURL(
+                    data.github
+                )}" target="_blank" rel="noopener">
+                    GitHub
+                </a>`
+            );
+        }
+
+        if (data.linkedin) {
+            items.push(
+                `<a href="${this.escapeURL(
+                    data.linkedin
+                )}" target="_blank" rel="noopener">
+                    LinkedIn
+                </a>`
+            );
+        }
+
+        if (data.portfolio) {
+            items.push(
+                `<a href="${this.escapeURL(
+                    data.portfolio
+                )}" target="_blank" rel="noopener">
+                    Portfolio
+                </a>`
+            );
+        }
+
+        return items.join(
+            `<span aria-hidden="true">•</span>`
+        );
+    },
+
+    renderSection(title, content) {
+
+        if (!content) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-section">
+
+                <h2 class="generated-resume-section-title">
+                    ${title}
+                </h2>
+
+                ${content}
+
+            </div>
+        `;
+    },
+
+    renderSkills(skills) {
+
+        if (!skills) {
+            return "";
+        }
+
+        const skillList = skills
+            .split(",")
+            .map(skill => skill.trim())
+            .filter(Boolean);
+
+        if (!skillList.length) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-skills">
+
+                ${skillList
+                    .map(skill => `
+                        <span class="generated-resume-skill">
+                            ${this.escapeHTML(skill)}
+                        </span>
+                    `)
+                    .join("")}
+
+            </div>
+        `;
+    },
+
+    renderExperience(data) {
+
+        if (
+            !data.experienceRole &&
+            !data.experienceCompany &&
+            !data.experienceDescription
+        ) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-item">
+
+                <div class="generated-resume-item-heading">
+
+                    <strong>
+                        ${this.escapeHTML(
+                            data.experienceRole
+                        )}
+                    </strong>
+
+                    <span>
+                        ${this.escapeHTML(
+                            data.experienceDuration
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="generated-resume-item-subtitle">
+
+                    ${this.escapeHTML(
+                        data.experienceCompany
+                    )}
+
+                </div>
+
+                <p>
+                    ${this.escapeHTML(
+                        data.experienceDescription
+                    ).replace(/\n/g, "<br>")}
+                </p>
+
+            </div>
+        `;
+    },
+
+    renderProject(data) {
+
+        if (
+            !data.projectName &&
+            !data.projectDescription
+        ) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-item">
+
+                <div class="generated-resume-item-heading">
+
+                    <strong>
+                        ${this.escapeHTML(
+                            data.projectName
+                        )}
+                    </strong>
+
+                </div>
+
+                ${
+                    data.projectTech
+                        ? `
+                            <div class="generated-resume-item-subtitle">
+                                ${this.escapeHTML(
+                                    data.projectTech
+                                )}
+                            </div>
+                          `
+                        : ""
+                }
+
+                <p>
+                    ${this.escapeHTML(
+                        data.projectDescription
+                    ).replace(/\n/g, "<br>")}
+                </p>
+
+                ${
+                    data.projectLink
+                        ? `
+                            <a
+                                class="generated-resume-link"
+                                href="${this.escapeURL(
+                                    data.projectLink
+                                )}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                View Project →
+                            </a>
+                          `
+                        : ""
+                }
+
+            </div>
+        `;
+    },
+
+    renderEducation(data) {
+
+        if (
+            !data.degree &&
+            !data.college &&
+            !data.educationYear
+        ) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-item">
+
+                <div class="generated-resume-item-heading">
+
+                    <strong>
+                        ${this.escapeHTML(
+                            data.degree
+                        )}
+                    </strong>
+
+                    <span>
+                        ${this.escapeHTML(
+                            data.educationYear
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="generated-resume-item-subtitle">
+
+                    ${this.escapeHTML(
+                        data.college
+                    )}
+
+                </div>
+
+            </div>
+        `;
+    },
+
+    renderCertification(data) {
+
+        if (
+            !data.certification &&
+            !data.certificationIssuer
+        ) {
+            return "";
+        }
+
+        return `
+            <div class="generated-resume-item">
+
+                <div class="generated-resume-item-heading">
+
+                    <strong>
+                        ${this.escapeHTML(
+                            data.certification
+                        )}
+                    </strong>
+
+                </div>
+
+                <div class="generated-resume-item-subtitle">
+
+                    ${this.escapeHTML(
+                        data.certificationIssuer
+                    )}
+
+                </div>
+
+            </div>
+        `;
+    },
+
+    build() {
+
+        const data = this.getData();
+
+        if (!data.name) {
+
+            alert(
+                "Please enter your Full Name first."
+            );
+
+            this.fields.name?.focus();
+
+            return;
+        }
+
+        const contact =
+            this.renderContact(data);
+
+        const experience =
+            this.renderExperience(data);
+
+        const project =
+            this.renderProject(data);
+
+        const education =
+            this.renderEducation(data);
+
+        const certification =
+            this.renderCertification(data);
+
+        const resumeHTML = `
+
+            <div class="generated-resume">
+
+                <header class="generated-resume-header">
+
+                    <h1 class="generated-resume-name">
+                        ${this.escapeHTML(
+                            data.name
+                        )}
+                    </h1>
+
+                    ${
+                        data.title
+                            ? `
+                                <div class="generated-resume-title">
+                                    ${this.escapeHTML(
+                                        data.title
+                                    )}
+                                </div>
+                              `
+                            : ""
+                    }
+
+                    ${
+                        contact
+                            ? `
+                                <div class="generated-resume-contact">
+                                    ${contact}
+                                </div>
+                              `
+                            : ""
+                    }
+
+                </header>
+
+
+                ${this.renderSection(
+                    "Professional Summary",
+                    data.summary
+                        ? `
+                            <p>
+                                ${this.escapeHTML(
+                                    data.summary
+                                ).replace(
+                                    /\n/g,
+                                    "<br>"
+                                )}
+                            </p>
+                          `
+                        : ""
+                )}
+
+
+                ${this.renderSection(
+                    "Technical Skills",
+                    this.renderSkills(
+                        data.skills
+                    )
+                )}
+
+
+                ${this.renderSection(
+                    "Experience",
+                    experience
+                )}
+
+
+                ${this.renderSection(
+                    "Projects",
+                    project
+                )}
+
+
+                ${this.renderSection(
+                    "Education",
+                    education
+                )}
+
+
+                ${this.renderSection(
+                    "Certifications",
+                    certification
+                )}
+
+            </div>
+
+            <div class="resume-builder-download-actions">
+
+                <button
+                    type="button"
+                    id="cpDownloadResumeBtn"
+                    class="builder-secondary-btn"
+                >
+                    ⬇️ Download Resume
+                </button>
+
+                <button
+                    type="button"
+                    id="cpPrintResumeBtn"
+                    class="builder-primary-btn"
+                >
+                    🖨️ Print / Save PDF
+                </button>
+
+            </div>
+        `;
+
+        this.preview.innerHTML = resumeHTML;
+
+        this.attachDownloadEvents();
+
+        this.preview.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    },
+
+    loadSample() {
+
+        const sample = {
+
+            name: "Priyanshu Kumar",
+
+            title:
+                "Software Engineer | Data Analytics | Python Developer",
+
+            email:
+                "yourname@email.com",
+
+            phone:
+                "+91 XXXXX XXXXX",
+
+            location:
+                "India",
+
+            github:
+                "https://github.com/username",
+
+            linkedin:
+                "https://linkedin.com/in/username",
+
+            portfolio:
+                "https://yourportfolio.com",
+
+            summary:
+                "Computer Science Engineering graduate and aspiring Software Engineer with a strong foundation in Python, Java, SQL, web technologies, and machine learning. Experienced in developing practical software and AI projects with a focus on problem solving, clean code, and scalable solutions.",
+
+            skills:
+                "Python, Java, JavaScript, SQL, HTML, CSS, Git, GitHub, FastAPI, REST APIs, React, Node.js, MongoDB, Machine Learning, Scikit-learn, Data Structures, OOP",
+
+            degree:
+                "B.Tech in Computer Science and Engineering",
+
+            college:
+                "Engineering College / University",
+
+            educationYear:
+                "2022 - 2026",
+
+            experienceRole:
+                "Software Developer Intern",
+
+            experienceCompany:
+                "Technology Company",
+
+            experienceDuration:
+                "2026",
+
+            experienceDescription:
+                "Worked on software development tasks, debugging, API integration, database operations, and collaborative development workflows. Applied programming fundamentals and version control practices to practical development tasks.",
+
+            projectName:
+                "CareerPilot AI",
+
+            projectTech:
+                "Python, FastAPI, JavaScript, REST API, ATS",
+
+            projectDescription:
+                "Built an AI-powered career platform featuring resume analysis, ATS scoring, job matching, skill-gap analysis, and personalized learning roadmap generation for job seekers.",
+
+            projectLink:
+                "https://github.com/username/careerpilot-ai",
+
+            certification:
+                "Professional Technology Certification",
+
+            certificationIssuer:
+                "Online Learning Platform"
+        };
+
+        Object.keys(this.fields)
+            .forEach(key => {
+
+                if (
+                    this.fields[key] &&
+                    sample[key] !== undefined
+                ) {
+                    this.fields[key].value =
+                        sample[key];
+                }
+            });
+
+        this.build();
+    },
+
+    attachDownloadEvents() {
+
+        const downloadButton =
+            document.getElementById(
+                "cpDownloadResumeBtn"
+            );
+
+        const printButton =
+            document.getElementById(
+                "cpPrintResumeBtn"
+            );
+
+        if (downloadButton) {
+
+            downloadButton.addEventListener(
+                "click",
+                () => this.download()
+            );
+        }
+
+        if (printButton) {
+
+            printButton.addEventListener(
+                "click",
+                () => this.printResume()
+            );
+        }
+    },
+
+    getStandaloneHTML() {
+
+        const resume =
+            this.preview.querySelector(
+                ".generated-resume"
+            );
+
+        if (!resume) {
+            return "";
+        }
+
+        return `
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Resume - CareerPilot AI
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            background: #eeeeee;
+            color: #161616;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        .generated-resume {
+            width: min(850px, 100%);
+            margin: 0 auto;
+            padding: 45px;
+            background: #ffffff;
+            color: #161616;
+        }
+
+        .generated-resume-header {
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #171717;
+        }
+
+        .generated-resume-name {
+            margin: 0 0 5px;
+            color: #111111;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .generated-resume-title {
+            margin-bottom: 10px;
+            color: #4f46e5;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .generated-resume-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px 12px;
+            color: #555555;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .generated-resume-contact a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        .generated-resume-section {
+            margin-bottom: 20px;
+        }
+
+        .generated-resume-section-title {
+            margin: 0 0 9px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #d8d8d8;
+            color: #171717;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .generated-resume-section p {
+            margin: 0;
+            color: #333333;
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        .generated-resume-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .generated-resume-skill {
+            padding: 4px 7px;
+            border: 1px solid #dddddd;
+            border-radius: 3px;
+            background: #f7f7f7;
+            color: #333333;
+            font-size: 10px;
+        }
+
+        .generated-resume-item {
+            margin-bottom: 13px;
+        }
+
+        .generated-resume-item-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 3px;
+        }
+
+        .generated-resume-item-heading strong {
+            color: #171717;
+            font-size: 11px;
+        }
+
+        .generated-resume-item-heading span {
+            color: #666666;
+            font-size: 10px;
+        }
+
+        .generated-resume-item-subtitle {
+            margin-bottom: 4px;
+            color: #4f46e5;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .generated-resume-link {
+            color: #4f46e5;
+            font-size: 10px;
+            text-decoration: none;
+        }
+
+        @media print {
+
+            body {
+                padding: 0;
+                background: #ffffff;
+            }
+
+            .generated-resume {
+                width: 100%;
+                padding: 35px;
+            }
+
+            @page {
+                size: A4;
+                margin: 12mm;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    ${resume.outerHTML}
+
+</body>
+
+</html>
+        `;
+    },
+
+    download() {
+
+        const html =
+            this.getStandaloneHTML();
+
+        if (!html) {
+
+            alert(
+                "Please build your resume first."
+            );
+
+            return;
+        }
+
+        const blob =
+            new Blob(
+                [html],
+                {
+                    type: "text/html;charset=utf-8"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "CareerPilot_AI_Resume.html";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        setTimeout(
+            () => URL.revokeObjectURL(url),
+            1000
+        );
+    },
+
+    printResume() {
+
+        const html =
+            this.getStandaloneHTML();
+
+        if (!html) {
+
+            alert(
+                "Please build your resume first."
+            );
+
+            return;
+        }
+
+        const printWindow =
+            window.open(
+                "",
+                "_blank"
+            );
+
+        if (!printWindow) {
+
+            alert(
+                "Please allow pop-ups to print your resume."
+            );
+
+            return;
+        }
+
+        printWindow.document.open();
+
+        printWindow.document.write(
+            html
+        );
+
+        printWindow.document.close();
+
+        printWindow.focus();
+
+        setTimeout(
+            () => {
+
+                printWindow.print();
+
+            },
+            500
+        );
+    },
+
+    init() {
+
+        if (
+            !this.preview ||
+            !this.buildButton
+        ) {
+            return;
+        }
+
+        this.buildButton.addEventListener(
+            "click",
+            () => this.build()
+        );
+
+        if (this.sampleButton) {
+
+            this.sampleButton.addEventListener(
+                "click",
+                () => this.loadSample()
+            );
+        }
+
+        Object.values(this.fields)
+            .forEach(field => {
+
+                if (!field) {
+                    return;
+                }
+
+                field.addEventListener(
+                    "input",
+                    () => {
+
+                        const hasResume =
+                            this.preview.querySelector(
+                                ".generated-resume"
+                            );
+
+                        if (hasResume) {
+                            this.build();
+                        }
+
+                    }
+                );
+
+            });
+    }
+};
+
+cpResumeBuilder.init(); 
 });
